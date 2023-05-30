@@ -1,9 +1,10 @@
 package kaito.software2.controller;
 
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import kaito.software2.DAO.AppointmentDAO;
 import kaito.software2.DAO.ContactsDAO;
 import kaito.software2.DAO.CustomerDAO;
@@ -13,20 +14,17 @@ import kaito.software2.model.Appointment;
 import kaito.software2.model.Contact;
 import kaito.software2.model.Customer;
 import kaito.software2.model.User;
-import kaito.software2.utilities.Validate;
 import kaito.software2.utilities.Nav;
-
+import kaito.software2.utilities.Validate;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-public class AddApptController extends AppointmentDAO implements Initializable, Validate, Nav {
+public class AddAppointmentController extends AppointmentDAO implements Initializable, Validate, Nav {
     public TextField id;
     public TextField title;
     public TextField desc;
@@ -43,13 +41,6 @@ public class AddApptController extends AppointmentDAO implements Initializable, 
     public ComboBox<Contact> contacts;
     LocalTime start = LocalTime.of(8, 0 );
     LocalTime end = LocalTime.of(22, 0 );
-
-    private LocalDateTime getLocalDateTime(LocalDate localDate){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM LLLL");
-        String formattedDate = localDate.format(formatter);
-        System.out.println(formattedDate);
-        return null;
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -73,7 +64,7 @@ public class AddApptController extends AppointmentDAO implements Initializable, 
 
     }
 
-    public void save(ActionEvent actionEvent) throws IOException, SQLException {
+    public void save() throws IOException, SQLException {
         String title = this.title.getText();
         String desc = this.desc.getText();
         String location = this.location.getText();
@@ -85,12 +76,12 @@ public class AddApptController extends AppointmentDAO implements Initializable, 
         LocalDateTime end = convertEstToLocal(LocalDateTime.of(endDate.getValue(), endTime.getValue()));
 
         // converts start and end times from EST to UTC
-        Appointment appt = new Appointment(title, desc, location, type, start, end, customer.getId(), user.getUserId(), contact.getId());
+        Appointment appointment = new Appointment(title, desc, location, type, start, end, customer.getId(), user.getUserId(), contact.getId());
 
         try {
             if (checkDate(this.startDate.getValue(), this.endDate.getValue())) {
                 if (checkOverlappingAppointments(customer, start, end)) {
-                    insert(appt);
+                    insert(appointment);
                     switchScene("view/appointment-screen.fxml");
                 } else {
                     Validate.popupError(5);
@@ -101,7 +92,7 @@ public class AddApptController extends AppointmentDAO implements Initializable, 
         }
     }
 
-    public void cancel(ActionEvent actionEvent) throws IOException {
+    public void cancel() throws IOException {
         switchScene("view/appointment-screen.fxml");
     }
 }
