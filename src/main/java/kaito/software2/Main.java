@@ -13,6 +13,8 @@ import kaito.software2.model.Customer;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -22,12 +24,9 @@ import java.util.ResourceBundle;
  */
 public class Main extends Application {
 
-    private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
-    public static boolean english = true;
-    public static boolean french = false;
-    public static ResourceBundle enBundle = ResourceBundle.getBundle("Lang", Locale.getDefault());
-    public static ResourceBundle jpBundle = ResourceBundle.getBundle("Lang", Locale.FRENCH);
     private static Stage stage;
+    public static final LocalTime OPENING_TIME = LocalTime.of(8, 00);
+    public static final LocalTime CLOSING_TIME = LocalTime.of(22, 00);
 
     @Override
     public void start(Stage stage) throws IOException, SQLException {
@@ -54,9 +53,6 @@ public class Main extends Application {
         return stage;
     }
 
-    public static ObservableList<Customer> getAllCustomers() {
-        return allCustomers;
-    }
 }
 
 

@@ -4,11 +4,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import kaito.software2.model.Appointment;
 import kaito.software2.model.Customer;
+import kaito.software2.utilities.Validate;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 
-public class AppointmentDAO implements DAO<Appointment> {
+public class AppointmentDAO implements DAO<Appointment>, Validate {
 
     public ObservableList<Appointment> checkAppointments(Customer customer) throws SQLException {
         ObservableList<Appointment> customerAppts = FXCollections.observableArrayList();
@@ -69,8 +70,8 @@ public class AppointmentDAO implements DAO<Appointment> {
             String description = rs.getString("Description");
             String location = rs.getString("Location");
             String type = rs.getString("Type");
-            LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
-            LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+            LocalDateTime start = convertUtcToLocal(rs.getTimestamp("Start").toLocalDateTime());
+            LocalDateTime end = convertUtcToLocal(rs.getTimestamp("End").toLocalDateTime());
             int customerId = rs.getInt("Customer_ID");
             int userId = rs.getInt("User_ID");
             int contactId = rs.getInt("Contact_ID");;
@@ -105,6 +106,7 @@ public class AppointmentDAO implements DAO<Appointment> {
 
     @Override
     public int update(Appointment appt) throws SQLException {
+
         String sql = "UPDATE appointments set Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setString(1, appt.getTitle());

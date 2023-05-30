@@ -88,7 +88,8 @@ public class AddApptController extends AppointmentDAO implements Initializable, 
         LocalDateTime startDateTime = LocalDateTime.of(startDate,startTime);
         LocalDateTime endDateTime = LocalDateTime.of(endDate,endTime);
 
-        Appointment appt = new Appointment(title, desc, location, type, startDateTime, endDateTime, customer.getId(), user.getUserId(), contact.getId());
+        // converts start and end times from EST to UTC
+        Appointment appt = new Appointment(title, desc, location, type, convertEstToUtc(startDateTime), convertEstToUtc(endDateTime), customer.getId(), user.getUserId(), contact.getId());
 
         try {
             if (checkDate(this.startDate.getValue(), this.endDate.getValue())) {

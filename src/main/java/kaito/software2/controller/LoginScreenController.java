@@ -8,6 +8,8 @@ import kaito.software2.utilities.Nav;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.ZoneId;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
@@ -15,6 +17,8 @@ import java.util.ResourceBundle;
  */
 public class LoginScreenController implements Initializable, Nav {
 
+    public static ResourceBundle enBundle = ResourceBundle.getBundle("Lang", Locale.getDefault());
+    public static ResourceBundle frBundle = ResourceBundle.getBundle("Lang", Locale.FRENCH);
     public Button loginButton;
     public TextField usernameField;
     public Label loginLabel;
@@ -23,7 +27,10 @@ public class LoginScreenController implements Initializable, Nav {
     public Label passwordLabel;
     public Label usernameLabel;
     public Label languageLabel;
+    public Label timezone;
     private String[] languageList = {"ENGLISH", "FRENCH"};
+    public static boolean english = true;
+    public static boolean french = false;
 
 
     @Override
@@ -33,31 +40,32 @@ public class LoginScreenController implements Initializable, Nav {
         languageChoiceBox.setValue("ENGLISH");
         // Listener for when user changes the
         languageChoiceBox.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> setLanguage(newValue));
+        timezone.setText(String.valueOf(ZoneId.systemDefault()));
     }
 
     public void setLanguage(String language) {
         if (language.equals("ENGLISH")) {
-            Main.english = true;
-//            Validation.japanese = false;
-            loginLabel.setText(Main.enBundle.getString("login"));
-            usernameLabel.setText(Main.enBundle.getString("username"));
-            usernameField.setPromptText(Main.enBundle.getString("enterUsername"));
-            passwordLabel.setText(Main.enBundle.getString("password"));
-            passwordField.setPromptText(Main.enBundle.getString("enterPassword"));
-            languageLabel.setText(Main.enBundle.getString("language"));
-            loginButton.setText(Main.enBundle.getString("login"));
-            Main.getStage().setTitle(Main.enBundle.getString("login"));
-//        } else if (language.equals("JAPANESE")) {
-//            Validation.japanese = true;
-//            Validation.english = false;
-//            loginLabel.setText(Validation.jpBundle.getString("login"));
-//            usernameLabel.setText(Validation.jpBundle.getString("username"));
-//            usernameField.setPromptText(Validation.jpBundle.getString("enterUsername"));
-//            passwordLabel.setText(Validation.jpBundle.getString("password"));
-//            passwordField.setPromptText(Validation.jpBundle.getString("enterPassword"));
-//            languageLabel.setText(Validation.jpBundle.getString("language"));
-//            loginButton.setText(Validation.jpBundle.getString("login"));
-//            Main.getStage().setTitle(Validation.jpBundle.getString("login"));
+            english = true;
+            french = false;
+            loginLabel.setText(enBundle.getString("login"));
+            usernameLabel.setText(enBundle.getString("username"));
+            usernameField.setPromptText(enBundle.getString("enterUsername"));
+            passwordLabel.setText(enBundle.getString("password"));
+            passwordField.setPromptText(enBundle.getString("enterPassword"));
+            languageLabel.setText(enBundle.getString("language"));
+            loginButton.setText(enBundle.getString("login"));
+            Main.getStage().setTitle(enBundle.getString("login"));
+        } else if (language.equals("FRENCH")) {
+            french = true;
+            english = false;
+            loginLabel.setText(frBundle.getString("login"));
+            usernameLabel.setText(frBundle.getString("username"));
+            usernameField.setPromptText(frBundle.getString("enterUsername"));
+            passwordLabel.setText(frBundle.getString("password"));
+            passwordField.setPromptText(frBundle.getString("enterPassword"));
+            languageLabel.setText(frBundle.getString("language"));
+            loginButton.setText(frBundle.getString("login"));
+            Main.getStage().setTitle(frBundle.getString("login"));
         }
     }
 

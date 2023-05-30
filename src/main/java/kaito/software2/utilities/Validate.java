@@ -2,7 +2,7 @@ package kaito.software2.utilities;
 
 import javafx.scene.control.Alert;
 
-import java.time.LocalDate;
+import java.time.*;
 
 public interface Validate {
 
@@ -45,6 +45,43 @@ public interface Validate {
         } catch(Exception e) {
             popupError(2);
         }
+    }
+
+    default LocalDateTime convertEstToUtc(LocalDateTime localDateTime) {
+        ZonedDateTime timeEst = localDateTime.atZone(ZoneId.of("US/Eastern"));
+        ZonedDateTime convertedTimeUtc = timeEst.withZoneSameInstant(ZoneId.of("UTC"));
+        return convertedTimeUtc.toLocalDateTime();
+    }
+
+    default LocalDateTime convertEstToLocal (LocalDateTime localDateTime) {
+        ZonedDateTime timeEst = localDateTime.atZone(ZoneId.of("US/Eastern"));
+        ZonedDateTime convertedTimeSysDefault = timeEst.withZoneSameInstant(ZoneId.systemDefault());
+        return convertedTimeSysDefault.toLocalDateTime();
+    }
+
+    default LocalDateTime convertUtcToLocal (LocalDateTime localDateTime) {
+        ZonedDateTime timeUtc = localDateTime.atZone(ZoneId.of("UTC"));
+        ZonedDateTime convertedTimeSysDefault = timeUtc.withZoneSameInstant(ZoneId.systemDefault());
+        return convertedTimeSysDefault.toLocalDateTime();
+    }
+
+    default LocalDateTime convertUtcToEst (LocalDateTime localDateTime) {
+        ZonedDateTime timeUtc = localDateTime.atZone(ZoneId.of("UTC"));
+        ZonedDateTime convertedTimeEST = timeUtc.withZoneSameInstant(ZoneId.of("EST"));
+        return convertedTimeEST.toLocalDateTime();
+    }
+
+    default LocalDateTime convertLocalToEst(LocalDateTime localDateTime) {
+        ZonedDateTime sysDefaultTime = localDateTime.atZone(ZoneId.systemDefault());
+        ZonedDateTime convertedTimeEST = sysDefaultTime.withZoneSameInstant(ZoneId.of("US/Eastern"));
+        return convertedTimeEST.toLocalDateTime();
+
+    }
+
+    default LocalDateTime convertLocalToUtc(LocalDateTime localDateTime) {
+        ZonedDateTime sysDefaultTime = localDateTime.atZone(ZoneId.systemDefault());
+        ZonedDateTime convertedTimeUTC = sysDefaultTime.withZoneSameInstant(ZoneId.of("UTC"));
+        return convertedTimeUTC.toLocalDateTime();
     }
 
     default boolean checkDate(LocalDate start, LocalDate end) {
