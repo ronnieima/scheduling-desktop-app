@@ -11,6 +11,34 @@ import java.time.LocalDateTime;
 
 public class AppointmentDAO implements DAO<Appointment>, Validate {
 
+    public boolean checkOverlappingAppointments(Customer customer, LocalDateTime givenStart, LocalDateTime givenEnd) throws SQLException {
+        String sql = "SELECT * FROM appointments WHERE Customer_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, customer.getId());
+        ResultSet rs = ps.executeQuery();
+
+        while(rs.next()) {
+            int customerId = rs.getInt("Customer_ID");
+            LocalDateTime start = convertUtcToLocal(rs.getTimestamp("Start").toLocalDateTime());
+            LocalDateTime end = convertUtcToLocal(rs.getTimestamp("End").toLocalDateTime());
+            if (customerId != customer.getId()) {
+                // Checks if appointment start is within the window
+                if ((givenStart.isAfter(start) || givenStart.equals(start)) && givenStart.isBefore(end)) {
+                    // Checks if appointment end is within the window
+                    if (end.isAfter(givenStart) && (end.isBefore(givenEnd) || end.isEqual(givenEnd))) {
+                        // Checks if appointment start and end are both outside of the window
+                        if ((givenStart.isBefore(start) || givenStart.isEqual(start)) && (givenEnd.isAfter(end) || givenStart.isEqual(end))) {
+                            return false;
+                        }
+                        return false;
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public ObservableList<Appointment> checkAppointments(Customer customer) throws SQLException {
         ObservableList<Appointment> customerAppts = FXCollections.observableArrayList();
         String sql = "SELECT * FROM appointments WHERE Customer_ID = ?";
@@ -70,8 +98,8 @@ public class AppointmentDAO implements DAO<Appointment>, Validate {
             String description = rs.getString("Description");
             String location = rs.getString("Location");
             String type = rs.getString("Type");
-            LocalDateTime start = convertUtcToLocal(rs.getTimestamp("Start").toLocalDateTime());
-            LocalDateTime end = convertUtcToLocal(rs.getTimestamp("End").toLocalDateTime());
+            LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
             int customerId = rs.getInt("Customer_ID");
             int userId = rs.getInt("User_ID");
             int contactId = rs.getInt("Contact_ID");;

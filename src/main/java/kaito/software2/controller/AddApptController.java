@@ -92,9 +92,11 @@ public class AddApptController extends AppointmentDAO implements Initializable, 
         Appointment appt = new Appointment(title, desc, location, type, convertEstToUtc(startDateTime), convertEstToUtc(endDateTime), customer.getId(), user.getUserId(), contact.getId());
 
         try {
-            if (checkDate(this.startDate.getValue(), this.endDate.getValue())) {
+            if (checkDate(this.startDate.getValue(), this.endDate.getValue()) && checkOverlappingAppointments(customer, startDateTime, endDateTime)) {
                 insert(appt);
                 switchScene("view/appointment-screen.fxml");
+            } else {
+                Validate.popupError(5);
             }
         } catch (NullPointerException e) {
             Validate.popupError(2);

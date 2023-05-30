@@ -2,14 +2,20 @@ package kaito.software2.DAO;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import kaito.software2.model.Appointment;
 import kaito.software2.model.Customer;
+import kaito.software2.utilities.Validate;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
-public class CustomerDAO implements DAO<Customer> {
+public class CustomerDAO implements DAO<Customer>, Validate {
+
+
 
     @Override
     public Customer get(int id) throws SQLException {

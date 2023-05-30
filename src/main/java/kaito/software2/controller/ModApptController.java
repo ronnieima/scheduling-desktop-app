@@ -13,10 +13,12 @@ import kaito.software2.model.Contact;
 import kaito.software2.model.Customer;
 import kaito.software2.model.User;
 import kaito.software2.utilities.Nav;
+import kaito.software2.utilities.Validate;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
@@ -54,6 +56,7 @@ public class ModApptController extends AppointmentDAO implements Initializable, 
         UserDAO userDAO = new UserDAO();
         ContactsDAO contactsDAO = new ContactsDAO();
 
+        //TODO fix timezones
         // Populates start and end time combo boxes with times
         while (start.isBefore(end.plusSeconds(1))) {
             startTime.getItems().add(start);
@@ -74,9 +77,9 @@ public class ModApptController extends AppointmentDAO implements Initializable, 
         location.setText(appt.getLocation());
         type.setText(appt.getType());
         startDate.setValue(appt.getStart().toLocalDate());
-        startTime.setValue(appt.getStart().toLocalTime());
+        startTime.setValue(LocalTime.from(convertLocalToEst(appt.getStart())));
         endDate.setValue(appt.getEnd().toLocalDate());
-        endTime.setValue(appt.getEnd().toLocalTime());
+        endTime.setValue(LocalTime.from(convertLocalToEst(LocalDateTime.from(appt.getEnd().toLocalTime().atDate(appt.getEnd().toLocalDate())))));
         try {
             customers.setValue(customerDAO.get(appt.getCustomerId()));
             users.setValue(userDAO.get(appt.getUserId()));
@@ -100,14 +103,22 @@ public class ModApptController extends AppointmentDAO implements Initializable, 
         String desc = this.desc.getText();
         String location = this.location.getText();
         String type = this.type.getText();
-        LocalDateTime start = LocalDateTime.of(startDate.getValue(), startTime.getValue());
+        LocalDateTime start = convertEstToLocal(LocalDateTime.of(startDate.getValue(), startTime.getValue()));
         LocalDateTime end = LocalDateTime.of(endDate.getValue(), endTime.getValue());
         int custId = customers.getValue().getId();
         int userId = users.getValue().getUserId();
         int contactId = contacts.getValue().getId();
         Appointment newAppt = new Appointment(id,title, desc, location, type, start, end, custId, userId, contactId);
-        update(newAppt);
-        switchScene("view/appointment-screen.fxml");
+        try {
+            if (checkDate(this.startDate.getValue(), this.endDate.getValue()) && checkOverlappingAppointments(this.customers.getValue(), start, end)) {
+                update(newAppt);
+                switchScene("view/appointment-screen.fxml");
+            } else {
+                Validate.popupError(5);
+            }
+        } catch (NullPointerException e) {
+            Validate.popupError(2);
+        }
     }
 
     public void cancel(ActionEvent actionEvent) throws IOException {

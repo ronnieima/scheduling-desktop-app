@@ -29,21 +29,13 @@ public interface Validate {
                 noItemSelected.showAndWait();
                 break;
             case 4: // customer still has appointments when being deleted
-                Alert customerHasAppts = createAlert(Alert.AlertType.ERROR, "Error", "Please delete all appointments before deleting.");
+                Alert customerHasAppts = createAlert(Alert.AlertType.ERROR, "Error", "Please delete all appointments attached to this customer before deleting.");
                 customerHasAppts.showAndWait();
                 break;
-        }
-    }
-
-    //TODO Functions that take a username and change it to UserID & vice versa.
-    default void convertUsername(String username) {
-        try {
-            // iterate through each username in DB
-                // if username.equals(DB username)
-                    // return username's ID
-
-        } catch(Exception e) {
-            popupError(2);
+            case 5: // overlapping appointment error
+                Alert overlappingAppt = createAlert(Alert.AlertType.ERROR, "Error", "This customer already has an appointment scheduled within those times.");
+                overlappingAppt.showAndWait();
+                break;
         }
     }
 
@@ -91,4 +83,5 @@ public interface Validate {
         }
         return true;
     }
+
 }
