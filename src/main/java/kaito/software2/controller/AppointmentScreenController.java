@@ -79,7 +79,7 @@ public class AppointmentScreenController extends AppointmentDAO implements Initi
 
             ModApptController.passAppointment(selectedAppt);
             switchScene("view/modify-appointment.fxml");
-        } catch (NullPointerException npe) {
+        } catch (Exception npe) {
             popupError(3);
         }
     }

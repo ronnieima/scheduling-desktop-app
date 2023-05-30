@@ -78,25 +78,23 @@ public class AddApptController extends AppointmentDAO implements Initializable, 
         String desc = this.desc.getText();
         String location = this.location.getText();
         String type = this.type.getText();
-        LocalDate startDate = this.startDate.getValue();
-        LocalTime startTime = this.startTime.getValue();
-        LocalDate endDate = this.endDate.getValue();
-        LocalTime endTime = this.endTime.getValue();
         Customer customer = this.customers.getValue();
         User user = this.users.getValue();
         Contact contact = this.contacts.getValue();
-        LocalDateTime startDateTime = LocalDateTime.of(startDate,startTime);
-        LocalDateTime endDateTime = LocalDateTime.of(endDate,endTime);
+        LocalDateTime start = convertEstToLocal(LocalDateTime.of(startDate.getValue(), startTime.getValue()));
+        LocalDateTime end = convertEstToLocal(LocalDateTime.of(endDate.getValue(), endTime.getValue()));
 
         // converts start and end times from EST to UTC
-        Appointment appt = new Appointment(title, desc, location, type, convertEstToUtc(startDateTime), convertEstToUtc(endDateTime), customer.getId(), user.getUserId(), contact.getId());
+        Appointment appt = new Appointment(title, desc, location, type, start, end, customer.getId(), user.getUserId(), contact.getId());
 
         try {
-            if (checkDate(this.startDate.getValue(), this.endDate.getValue()) && checkOverlappingAppointments(customer, startDateTime, endDateTime)) {
-                insert(appt);
-                switchScene("view/appointment-screen.fxml");
-            } else {
-                Validate.popupError(5);
+            if (checkDate(this.startDate.getValue(), this.endDate.getValue())) {
+                if (checkOverlappingAppointments(customer, start, end)) {
+                    insert(appt);
+                    switchScene("view/appointment-screen.fxml");
+                } else {
+                    Validate.popupError(5);
+                }
             }
         } catch (NullPointerException e) {
             Validate.popupError(2);

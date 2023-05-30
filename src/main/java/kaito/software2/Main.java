@@ -9,10 +9,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import kaito.software2.DAO.*;
 import kaito.software2.model.Customer;
+import kaito.software2.utilities.Validate;
 
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Locale;
@@ -47,6 +49,10 @@ public class Main extends Application {
         JDBC.openConnection();
         launch();
         JDBC.closeConnection();
+
+
+
+
     }
 
     public static Stage getStage() {

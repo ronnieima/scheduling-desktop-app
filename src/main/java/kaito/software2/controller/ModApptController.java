@@ -79,7 +79,7 @@ public class ModApptController extends AppointmentDAO implements Initializable, 
         startDate.setValue(appt.getStart().toLocalDate());
         startTime.setValue(LocalTime.from(convertLocalToEst(appt.getStart())));
         endDate.setValue(appt.getEnd().toLocalDate());
-        endTime.setValue(LocalTime.from(convertLocalToEst(LocalDateTime.from(appt.getEnd().toLocalTime().atDate(appt.getEnd().toLocalDate())))));
+        endTime.setValue(LocalTime.from(convertLocalToEst(appt.getEnd())));
         try {
             customers.setValue(customerDAO.get(appt.getCustomerId()));
             users.setValue(userDAO.get(appt.getUserId()));
@@ -104,7 +104,7 @@ public class ModApptController extends AppointmentDAO implements Initializable, 
         String location = this.location.getText();
         String type = this.type.getText();
         LocalDateTime start = convertEstToLocal(LocalDateTime.of(startDate.getValue(), startTime.getValue()));
-        LocalDateTime end = LocalDateTime.of(endDate.getValue(), endTime.getValue());
+        LocalDateTime end = convertEstToLocal(LocalDateTime.of(endDate.getValue(), endTime.getValue()));
         int custId = customers.getValue().getId();
         int userId = users.getValue().getUserId();
         int contactId = contacts.getValue().getId();
