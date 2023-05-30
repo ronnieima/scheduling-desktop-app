@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="850.0" style="-fx-background-color: #102A43;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kaito.software2.controller.AddApptController">
+   <children>
+      <VBox layoutX="400.0" layoutY="172.0" prefHeight="687.0" prefWidth="400.0" spacing="20.0">
+         <children>
+            <TextField fx:id="id" disable="true" editable="false" prefHeight="46.0" prefWidth="400.0" text="Auto Generated" />
+            <TextField fx:id="title" prefHeight="45.0" prefWidth="356.0" promptText="Enter a title" />
+            <TextField fx:id="desc" prefHeight="45.0" prefWidth="356.0" promptText="Enter a description" />
+            <TextField fx:id="location" prefHeight="45.0" prefWidth="356.0" promptText="Enter a location" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="type" prefHeight="45.0" prefWidth="356.0" promptText="Enter a type" />
+            <DatePicker fx:id="startDate" prefHeight="45.0" prefWidth="400.0" promptText="Select a start date" />
+            <ComboBox fx:id="startTime" prefHeight="45.0" prefWidth="400.0" promptText="Select a start time" />
+            <DatePicker fx:id="endDate" prefHeight="45.0" prefWidth="400.0" promptText="Select an end date" />
+            <ComboBox fx:id="endTime" layoutX="10.0" layoutY="361.0" prefHeight="45.0" prefWidth="400.0" promptText="Select an end time" />
+            <ComboBox fx:id="customers" prefHeight="45.0" prefWidth="400.0" promptText="Select a customer" />
+            <ComboBox fx:id="users" layoutX="10.0" layoutY="565.0" prefHeight="45.0" prefWidth="400.0" promptText="Select a user" />
+            <ComboBox fx:id="contacts" layoutX="10.0" layoutY="630.0" prefHeight="45.0" prefWidth="400.0" promptText="Select a contact" />
+         </children>
+      </VBox>
+      <Label layoutX="35.0" layoutY="24.0" prefHeight="98.0" prefWidth="442.0" text="Add Appointment" textFill="WHITE">
+         <font>
+            <Font name="Leelawadee UI" size="45.0" />
+         </font>
+      </Label>
+      <VBox layoutX="64.0" layoutY="162.0" prefHeight="687.0" prefWidth="297.0" spacing="3.0">
+         <children>
+            <Label prefHeight="39.0" prefWidth="250.0" text="Appt ID" textFill="WHITE">
+               <font>
+                  <Font name="Leelawadee UI" size="39.0" />
+               </font>
+            </Label>
+            <Label prefWidth="137.0" text="Title" textFill="WHITE">
+               <font>
+                  <Font name="Leelawadee UI" size="39.0" />
+               </font>
+            </Label>
+            <Label prefHeight="56.0" prefWidth="204.0" text="Description" textFill="WHITE">
+               <font>
+                  <Font name="Leelawadee UI" size="39.0" />
+               </font>
+            </Label>
+            <Label prefHeight="56.0" prefWidth="204.0" text="Location" textFill="WHITE">
+               <font>
+                  <Font name="Leelawadee UI" size="39.0" />
+               </font>
+            </Label>
+            <Label prefHeight="56.0" prefWidth="204.0" text="Type" textFill="WHITE">
+               <font>
+                  <Font name="Leelawadee UI" size="39.0" />
+               </font>
+            </Label>
+            <Label prefHeight="56.0" prefWidth="274.0" text="Start Date" textFill="WHITE">
+               <font>
+                  <Font name="Leelawadee UI" size="39.0" />
+               </font>
+            </Label>
+            <Label prefHeight="56.0" prefWidth="274.0" text="Start Time" textFill="WHITE">
+               <font>
+                  <Font name="Leelawadee UI" size="39.0" />
+               </font>
+            </Label>
+            <Label prefHeight="62.0" prefWidth="274.0" text="End Date" textFill="WHITE">
+               <font>
+                  <Font name="Leelawadee UI" size="39.0" />
+               </font>
+            </Label>
+            <Label prefHeight="0.0" prefWidth="274.0" text="End Time" textFill="WHITE">
+               <font>
+                  <Font name="Leelawadee UI" size="39.0" />
+               </font>
+            </Label>
+            <Label prefHeight="61.0" prefWidth="281.0" text="Customer " textFill="WHITE">
+               <font>
+                  <Font name="Leelawadee UI" size="39.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="581.0" prefHeight="0.0" prefWidth="274.0" text="UserID" textFill="WHITE">
+               <font>
+                  <Font name="Leelawadee UI" size="39.0" />
+               </font>
+            </Label>
+            <Label graphicTextGap="0.0" prefHeight="56.0" prefWidth="204.0" text="Contact ID" textFill="WHITE">
+               <font>
+                  <Font name="Leelawadee UI" size="39.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <Button fx:id="saveButton" layoutX="361.0" layoutY="915.0" mnemonicParsing="false" onAction="#save" prefHeight="56.0" prefWidth="142.0" style="-fx-background-radius: 20; -fx-background-color: #626D98;" text="Save" textFill="WHITE">
+         <font>
+            <Font name="Leelawadee UI" size="20.0" />
+         </font>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color opacity="0.5954198241233826" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Button>
+      <Button fx:id="cancelButton" layoutX="619.0" layoutY="915.0" mnemonicParsing="false" onAction="#cancel" prefHeight="56.0" prefWidth="142.0" style="-fx-background-radius: 20; -fx-background-color: #626D98;" text="Cancel" textFill="WHITE">
+         <font>
+            <Font name="Leelawadee UI" size="20.0" />
+         </font>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color opacity="0.5954198241233826" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Button>
+   </children>
+</AnchorPane>
