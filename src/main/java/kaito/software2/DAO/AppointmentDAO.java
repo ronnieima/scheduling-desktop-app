@@ -7,7 +7,10 @@ import kaito.software2.model.Customer;
 import kaito.software2.utilities.Validate;
 
 import java.sql.*;
-import java.time.LocalDateTime;
+import java.time.*;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 
 public class AppointmentDAO implements DAO<Appointment>, Validate {
 
@@ -39,7 +42,7 @@ public class AppointmentDAO implements DAO<Appointment>, Validate {
         return true;
     }
 
-    public ObservableList<Appointment> checkAppointments(Customer customer) throws SQLException {
+    public ObservableList<Appointment> checkExistingAppointments(Customer customer) throws SQLException {
         ObservableList<Appointment> customerAppts = FXCollections.observableArrayList();
         String sql = "SELECT * FROM appointments WHERE Customer_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -61,6 +64,71 @@ public class AppointmentDAO implements DAO<Appointment>, Validate {
             customerAppts.add(newAppt);
         }
         return customerAppts;
+    }
+
+    public ObservableList<Appointment> filterByMonth() throws SQLException {
+        ObservableList appointmentsByMonth = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM appointments WHERE Start BETWEEN ? AND ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        LocalDateTime firstDayLDT = LocalDateTime.now().withDayOfMonth(1);
+        LocalDateTime lastDayLDT = LocalDateTime.now().with(TemporalAdjusters.lastDayOfMonth());
+
+        Timestamp firstDayTS = Timestamp.valueOf(firstDayLDT);
+        Timestamp lastDayTS = Timestamp.valueOf(lastDayLDT);
+
+        ps.setTimestamp(1, firstDayTS);
+        ps.setTimestamp(2, lastDayTS);
+
+        ResultSet rs = ps.executeQuery();
+
+        while(rs.next()) {
+            int id = rs.getInt("Appointment_ID");
+            String title = rs.getString("Title");
+            String description = rs.getString("Description");
+            String location = rs.getString("Location");
+            String type = rs.getString("Type");
+            LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+            int customerId = rs.getInt("Customer_ID");
+            int userId = rs.getInt("User_ID");
+            int contactId = rs.getInt("Contact_ID");;
+            Appointment newAppt = new Appointment(id, title, description, location,type,start,end,customerId,userId,contactId);
+            appointmentsByMonth.add(newAppt);
+        }
+
+        return appointmentsByMonth;
+    }
+
+    public ObservableList<Appointment> filterByWeek() throws SQLException {
+        ObservableList<Appointment> appointmentsByWeek = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM appointments WHERE Start BETWEEN ? AND ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        LocalDateTime dateNow = LocalDateTime.now();
+        LocalDateTime sixDaysLater = LocalDateTime.now().plusDays(6);
+
+        Timestamp dateNowTS = Timestamp.valueOf(dateNow);
+        Timestamp sixDaysLaterTS = Timestamp.valueOf(sixDaysLater);
+
+        ps.setTimestamp(1, dateNowTS);
+        ps.setTimestamp(2, sixDaysLaterTS);
+
+        ResultSet rs = ps.executeQuery();
+
+        while(rs.next()) {
+            int id = rs.getInt("Appointment_ID");
+            String title = rs.getString("Title");
+            String description = rs.getString("Description");
+            String location = rs.getString("Location");
+            String type = rs.getString("Type");
+            LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+            int customerId = rs.getInt("Customer_ID");
+            int userId = rs.getInt("User_ID");
+            int contactId = rs.getInt("Contact_ID");;
+            Appointment newAppt = new Appointment(id, title, description, location,type,start,end,customerId,userId,contactId);
+            appointmentsByWeek.add(newAppt);
+        }
+        return appointmentsByWeek;
     }
 
     @Override

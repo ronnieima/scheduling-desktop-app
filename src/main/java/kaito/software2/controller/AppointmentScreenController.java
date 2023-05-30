@@ -100,13 +100,16 @@ public class AppointmentScreenController extends AppointmentDAO implements Initi
         }
     }
 
-    public void viewByMonth(ActionEvent actionEvent) {
+    public void viewByMonth(ActionEvent actionEvent) throws SQLException {
+        apptTable.setItems(filterByMonth());
     }
 
-    public void viewByWeek(ActionEvent actionEvent) {
+    public void viewByWeek(ActionEvent actionEvent) throws SQLException {
+        apptTable.setItems(filterByWeek());
     }
 
-    public void viewAll(ActionEvent actionEvent) {
+    public void viewAll(ActionEvent actionEvent) throws SQLException {
+        apptTable.setItems(getAll());
     }
 
     public void pullReports(ActionEvent actionEvent) {

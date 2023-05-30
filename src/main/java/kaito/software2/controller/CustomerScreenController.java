@@ -78,7 +78,7 @@ public class CustomerScreenController extends CustomerDAO implements Initializab
         Customer selectedCustomer = custTable.getSelectionModel().getSelectedItem();
         if (selectedCustomer != null) {
             // Checks if selected customer has appointments before deleting
-            if (appointmentDAO.checkAppointments(selectedCustomer).isEmpty()) {
+            if (appointmentDAO.checkExistingAppointments(selectedCustomer).isEmpty()) {
                 Alert delConf = createAlert(Alert.AlertType.CONFIRMATION, "Delete", "Are you sure you would like to delete this customer?");
                 if(delConf.showAndWait().get() == ButtonType.OK){
                     delete(selectedCustomer);
