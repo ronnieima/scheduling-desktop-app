@@ -10,7 +10,7 @@ import java.time.Month;
 public class Appointment {
     public static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
     private int total;
-    private Month month;
+    private String month;
     private int id;
     private String title;
     private String description;
@@ -54,7 +54,7 @@ public class Appointment {
      * @param type
      * @param total
      */
-    public Appointment(Month month, String type, int total) {
+    public Appointment(String month, String type, int total) {
         this.month = month;
         this.type = type;
         this.total = total;
@@ -81,11 +81,11 @@ public class Appointment {
         this.total = total;
     }
 
-    public Month getMonth() {
+    public String getMonth() {
         return month;
     }
 
-    public void setMonth(Month month) {
+    public void setMonth(String month) {
         this.month = month;
     }
 

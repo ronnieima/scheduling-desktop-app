@@ -104,12 +104,12 @@ public class AppointmentDAO implements DAO<Appointment>, Validate {
 
     public ObservableList<Appointment> getAppointmentsByTypeAndMonth() throws SQLException {
         ObservableList<Appointment> appointmentsByTypeAndMonth = FXCollections.observableArrayList();
-        String sql = "SELECT Type, start as 'Month', COUNT(*) as Total FROM appointments GROUP BY Type, Month ORDER BY Start";
+        String sql = "SELECT Type, date_format(start, '%M') as 'Month', COUNT(*) as Total FROM appointments GROUP BY Type, Month ORDER BY Start";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
 
         while(rs.next()) {
-            Month month = rs.getTimestamp("Month").toLocalDateTime().getMonth();
+            String month = rs.getString("Month");
             String type = rs.getString("Type");
             int total = rs.getInt("Total");
             Appointment newAppointment = new Appointment(month, type, total);

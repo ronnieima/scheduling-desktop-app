@@ -22,36 +22,78 @@ public interface Validate {
     static void popupError(int alertId) {
         switch (alertId){
             case 1: // checkDate error
+                if (french = true) {
+                    Alert checkDateAlert = createAlert(Alert.AlertType.ERROR, "Error",
+                            frBundle.getString("checkDateAlert"));
+                    checkDateAlert.showAndWait();
+                    break;
+                }
                 Alert checkDateAlert = createAlert(Alert.AlertType.ERROR, "Error",
                         "Start date must be before end date.");
                 checkDateAlert.showAndWait();
                 break;
             case 2: // username empty
+                if (french = true) {
+                    Alert emptyError = createAlert(Alert.AlertType.ERROR, "Error",
+                            frBundle.getString("emptyError"));
+                    emptyError.showAndWait();
+                    break;
+                }
                 Alert emptyError = createAlert(Alert.AlertType.ERROR, "Error",
                         "Please fill in the empty field(s).");
                 emptyError.showAndWait();
                 break;
             case 3: // no item selected
+                if (french = true) {
+                    Alert noItemSelected = createAlert(Alert.AlertType.ERROR, "Error",
+                            frBundle.getString("noItemSelected"));
+                    noItemSelected.showAndWait();
+                    break;
+                }
                 Alert noItemSelected = createAlert(Alert.AlertType.ERROR, "Error",
                         "Please select an item.");
                 noItemSelected.showAndWait();
                 break;
             case 4: // customer still has appointments when being deleted
+                if (french = true) {
+                    Alert customerHasAppts = createAlert(Alert.AlertType.ERROR, "Error",
+                            frBundle.getString("customerHasAppts"));
+                    customerHasAppts.showAndWait();
+                    break;
+                }
                 Alert customerHasAppts = createAlert(Alert.AlertType.ERROR, "Error",
                         "Please delete all appointments attached to this customer before deleting.");
                 customerHasAppts.showAndWait();
                 break;
             case 5: // overlapping appointment error
+                if (french = true) {
+                    Alert overlappingAppt = createAlert(Alert.AlertType.ERROR, "Error",
+                            frBundle.getString("overlappingAppt"));
+                    overlappingAppt.showAndWait();
+                    break;
+                }
                 Alert overlappingAppt = createAlert(Alert.AlertType.ERROR, "Error",
                         "This customer already has an appointment scheduled within those times.");
                 overlappingAppt.showAndWait();
                 break;
             case 6: // outside business hours error
+                if (french = true) {
+                    Alert outsideBusinessHours = createAlert(Alert.AlertType.ERROR, "Error",
+                            frBundle.getString("outsideBusinessHours"));
+                    outsideBusinessHours.showAndWait();
+                    break;
+                }
                 Alert outsideBusinessHours = createAlert(Alert.AlertType.ERROR, "Error",
                         "Appointment is outside the business hours of 0800-2200 EST.");
                 outsideBusinessHours.showAndWait();
                 break;
             case 7: // start time after end time error
+                if (french = true) {
+                    Alert startAfterEnd = createAlert(Alert.AlertType.ERROR, "Error",
+                            frBundle.getString("startAfterEnd"));
+                    startAfterEnd.showAndWait();
+                    break;
+                }
                 Alert startAfterEnd = createAlert(Alert.AlertType.ERROR, "Error",
                         "Appointment start time is after the end time.");
                 startAfterEnd.showAndWait();
