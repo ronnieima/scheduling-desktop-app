@@ -2,6 +2,7 @@ package kaito.software2.utilities;
 
 import javafx.scene.control.Alert;
 import kaito.software2.model.Appointment;
+import static kaito.software2.controller.LoginScreenController.*;
 
 import java.time.*;
 
@@ -21,35 +22,49 @@ public interface Validate {
     static void popupError(int alertId) {
         switch (alertId){
             case 1: // checkDate error
-                Alert checkDateAlert = createAlert(Alert.AlertType.ERROR, "Error", "Start date must be before end date.");
+                Alert checkDateAlert = createAlert(Alert.AlertType.ERROR, "Error",
+                        "Start date must be before end date.");
                 checkDateAlert.showAndWait();
                 break;
             case 2: // username empty
-                Alert emptyError = createAlert(Alert.AlertType.ERROR, "Error", "Please fill in the empty field(s).");
+                Alert emptyError = createAlert(Alert.AlertType.ERROR, "Error",
+                        "Please fill in the empty field(s).");
                 emptyError.showAndWait();
                 break;
             case 3: // no item selected
-                Alert noItemSelected = createAlert(Alert.AlertType.ERROR, "Error", "Please select an item.");
+                Alert noItemSelected = createAlert(Alert.AlertType.ERROR, "Error",
+                        "Please select an item.");
                 noItemSelected.showAndWait();
                 break;
             case 4: // customer still has appointments when being deleted
-                Alert customerHasAppts = createAlert(Alert.AlertType.ERROR, "Error", "Please delete all appointments attached to this customer before deleting.");
+                Alert customerHasAppts = createAlert(Alert.AlertType.ERROR, "Error",
+                        "Please delete all appointments attached to this customer before deleting.");
                 customerHasAppts.showAndWait();
                 break;
             case 5: // overlapping appointment error
-                Alert overlappingAppt = createAlert(Alert.AlertType.ERROR, "Error", "This customer already has an appointment scheduled within those times.");
+                Alert overlappingAppt = createAlert(Alert.AlertType.ERROR, "Error",
+                        "This customer already has an appointment scheduled within those times.");
                 overlappingAppt.showAndWait();
                 break;
             case 6: // outside business hours error
-                Alert outsideBusinessHours = createAlert(Alert.AlertType.ERROR, "Error", "Appointment is outside the business hours of 0800-2200 EST.");
+                Alert outsideBusinessHours = createAlert(Alert.AlertType.ERROR, "Error",
+                        "Appointment is outside the business hours of 0800-2200 EST.");
                 outsideBusinessHours.showAndWait();
                 break;
             case 7: // start time after end time error
-                Alert startAfterEnd = createAlert(Alert.AlertType.ERROR, "Error", "Appointment start time is after the end time.");
+                Alert startAfterEnd = createAlert(Alert.AlertType.ERROR, "Error",
+                        "Appointment start time is after the end time.");
                 startAfterEnd.showAndWait();
                 break;
             case 8: // invalid login error
-                Alert invalidLogin = createAlert(Alert.AlertType.ERROR, "Error", "Invalid username and/or password.");
+                if (french = true) {
+                    Alert invalidLogin = createAlert(Alert.AlertType.ERROR, "Error",
+                            frBundle.getString("invalidLogin"));
+                    invalidLogin.showAndWait();
+                    break;
+                }
+                Alert invalidLogin = createAlert(Alert.AlertType.ERROR, "Error",
+                        "Invalid username and/or password.");
                 invalidLogin.showAndWait();
                 break;
         }

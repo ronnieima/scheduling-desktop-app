@@ -1,6 +1,5 @@
 package kaito.software2.controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import kaito.software2.DAO.AppointmentDAO;
@@ -15,8 +14,6 @@ import java.sql.SQLException;
 import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import static kaito.software2.utilities.Validate.createAlert;
 
 /**
  * ERROR: I thought jp was the langauge code but i discovered it was ja
@@ -39,18 +36,19 @@ public class LoginScreenController extends UserDAO implements Initializable, Nav
     public static boolean french = false;
 
 
+    // TODO fix language to match system settings
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Main.getStage().setTitle("Appointment Scheduler - Login");
-        languageChoiceBox.getItems().addAll(languageList);
-        languageChoiceBox.setValue("ENGLISH");
-        // Listener for when user changes the
-        languageChoiceBox.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> setLanguage(newValue));
         timezone.setText(String.valueOf(ZoneId.systemDefault()));
+
+        Locale currentLocale = Locale.getDefault();
+        setLanguage(currentLocale.toString());
     }
 
     public void setLanguage(String language) {
-        if (language.equals("ENGLISH")) {
+        if (language.equals("en")) {
             english = true;
             french = false;
             loginLabel.setText(enBundle.getString("login"));
@@ -61,7 +59,7 @@ public class LoginScreenController extends UserDAO implements Initializable, Nav
             languageLabel.setText(enBundle.getString("language"));
             loginButton.setText(enBundle.getString("login"));
             Main.getStage().setTitle(enBundle.getString("login"));
-        } else if (language.equals("FRENCH")) {
+        } else if (language.equals("fr")) {
             french = true;
             english = false;
             loginLabel.setText(frBundle.getString("login"));
@@ -77,10 +75,9 @@ public class LoginScreenController extends UserDAO implements Initializable, Nav
 
     /**
      * Switches to the main screen if user enters the correct login credentials.
-     * @param actionEvent
      * @throws IOException
      */
-    public void login(ActionEvent actionEvent) throws IOException, SQLException {
+    public void login() throws IOException, SQLException {
         AppointmentDAO appointmentDAO = new AppointmentDAO();
         String username = usernameField.getText();
         String password = passwordField.getText();
