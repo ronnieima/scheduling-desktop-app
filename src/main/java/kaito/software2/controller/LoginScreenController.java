@@ -3,11 +3,15 @@ package kaito.software2.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import kaito.software2.DAO.AppointmentDAO;
+import kaito.software2.DAO.UserDAO;
 import kaito.software2.Main;
+import kaito.software2.model.User;
 import kaito.software2.utilities.Nav;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -17,7 +21,7 @@ import static kaito.software2.utilities.Validate.createAlert;
 /**
  * ERROR: I thought jp was the langauge code but i discovered it was ja
  */
-public class LoginScreenController implements Initializable, Nav {
+public class LoginScreenController extends UserDAO implements Initializable, Nav {
 
     public static ResourceBundle enBundle = ResourceBundle.getBundle("Lang", Locale.getDefault());
     public static ResourceBundle frBundle = ResourceBundle.getBundle("Lang", Locale.FRENCH);
@@ -76,14 +80,13 @@ public class LoginScreenController implements Initializable, Nav {
      * @param actionEvent
      * @throws IOException
      */
-    public void login(ActionEvent actionEvent) throws IOException {
+    public void login(ActionEvent actionEvent) throws IOException, SQLException {
+        AppointmentDAO appointmentDAO = new AppointmentDAO();
         // get db of users and passses
         // check if username is valid
         // take username and compare it with password
         switchScene("view/appointment-screen.fxml");
-
-
-            createAlert(Alert.AlertType.INFORMATION, "Upcoming Appointments", "You have an upcoming appointment within 15 minutes!");
+        appointmentDAO.checkUpcomingAppointments(get(1));
     }
 
 }

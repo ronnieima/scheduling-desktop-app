@@ -8,7 +8,6 @@ public class User {
     private int userId;
     private String userName;
     private String password;
-    private static ObservableList<User> allUsers = FXCollections.observableArrayList();
 
     public User(int userId, String userName, String password) {
         this.userId = userId;
@@ -19,14 +18,6 @@ public class User {
     @Override
     public String toString() {
         return userName + " | ID: " + userId;
-    }
-
-    public static ObservableList<User> getAllUsers() {
-        return allUsers;
-    }
-
-    public static void setAllUsers(ObservableList<User> allUsers) {
-        User.allUsers = allUsers;
     }
 
     public int getUserId() {

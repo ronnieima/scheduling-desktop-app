@@ -2,6 +2,7 @@ package kaito.software2.DAO;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import kaito.software2.model.Appointment;
 import kaito.software2.model.Customer;
 import kaito.software2.model.User;
@@ -9,14 +10,39 @@ import kaito.software2.utilities.Validate;
 
 import java.sql.*;
 import java.time.*;
-import java.time.temporal.Temporal;
-import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 
 public class AppointmentDAO implements DAO<Appointment>, Validate {
 
-    public boolean hasUpcomingAppointments (User user) {
-        return true;
+    /**
+     * Searches through a user's appointments to see if they have an appointment within 15 minutes.
+     * @param user User to check.
+     * @throws SQLException
+     */
+    public void checkUpcomingAppointments (User user) throws SQLException {
+        boolean appointmentFound = false;
+        String sql = "SELECT * FROM appointments WHERE USER_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, user.getUserId());
+
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            int appointmentId = rs.getInt("Appointment_ID");
+            LocalDateTime startDateTimeLocal = convertUtcToLocal(rs.getTimestamp("Start").toLocalDateTime());
+            LocalDateTime fifteenMinutesAfterNow = LocalDateTime.now().plusMinutes(15);
+
+            if (startDateTimeLocal.isBefore(fifteenMinutesAfterNow) && startDateTimeLocal.isAfter(LocalDateTime.now())) {
+                appointmentFound = true;
+                Alert upcomingAppointment = Validate.createAlert(Alert.AlertType.INFORMATION, "Upcoming Appointment", "You have an upcoming appointment within 15 minutes! " + appointmentId + startDateTimeLocal);
+                upcomingAppointment.showAndWait();
+            }
+        }
+        // If there is no appointment found, popup an alert that states that there are no upcoming appointments.
+        if (!appointmentFound) {
+            Alert noAppointments = Validate.createAlert(Alert.AlertType.INFORMATION, "No Upcoming Appointment", "You have no upcoming appointments.");
+            noAppointments.showAndWait();
+        }
     }
 
     public boolean checkOverlappingAppointments(Appointment appointment, LocalDateTime givenStartLocal, LocalDateTime givenEndLocal) throws SQLException {

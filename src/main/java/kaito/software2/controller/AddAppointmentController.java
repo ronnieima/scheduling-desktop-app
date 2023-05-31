@@ -75,15 +75,17 @@ public class AddAppointmentController extends AppointmentDAO implements Initiali
         LocalDateTime start = convertEstToLocal(LocalDateTime.of(startDate.getValue(), startTime.getValue()));
         LocalDateTime end = convertEstToLocal(LocalDateTime.of(endDate.getValue(), endTime.getValue()));
 
-        Appointment appointment = new Appointment(title, desc, location, type, start, end, customer.getId(), user.getUserId(), contact.getId());
+        Appointment newAppointment = new Appointment(title, desc, location, type, start, end, customer.getId(), user.getUserId(), contact.getId());
 
         try {
-            if (checkDate(this.startDate.getValue(), this.endDate.getValue())) {
-                if (checkOverlappingAppointments(appointment, start, end)) {
-                    insert(appointment);
-                    switchScene("view/appointment-screen.fxml");
-                } else {
-                    Validate.popupError(5);
+            if(!isOutsideBusinessHours(newAppointment) && !startTimeIsAfterEndTime(newAppointment)) {
+                if (checkDate(this.startDate.getValue(), this.endDate.getValue())) {
+                    if (checkOverlappingAppointments(newAppointment, start, end)) {
+                        insert(newAppointment);
+                        switchScene("view/appointment-screen.fxml");
+                    } else {
+                        Validate.popupError(5);
+                    }
                 }
             }
         } catch (NullPointerException e) {

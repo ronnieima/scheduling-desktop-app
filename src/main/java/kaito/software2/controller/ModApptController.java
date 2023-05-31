@@ -106,12 +106,12 @@ public class ModApptController extends AppointmentDAO implements Initializable, 
         int custId = customers.getValue().getId();
         int userId = users.getValue().getUserId();
         int contactId = contacts.getValue().getId();
-        Appointment newAppt = new Appointment(id,title, desc, location, type, start, end, custId, userId, contactId);
+        Appointment newAppointment = new Appointment(id,title, desc, location, type, start, end, custId, userId, contactId);
 
         try {
-            if(!isOutsideBusinessHours(newAppt) && !startTimeIsAfterEndTime(newAppt)) {
-                if (checkDate(this.startDate.getValue(), this.endDate.getValue()) && checkOverlappingAppointments(newAppt, start, end)) {
-                    update(newAppt);
+            if(!isOutsideBusinessHours(newAppointment) && !startTimeIsAfterEndTime(newAppointment)) {
+                if (checkDate(this.startDate.getValue(), this.endDate.getValue()) && checkOverlappingAppointments(newAppointment, start, end)) {
+                    update(newAppointment);
                     switchScene("view/appointment-screen.fxml");
                 } else {
                     Validate.popupError(5);
