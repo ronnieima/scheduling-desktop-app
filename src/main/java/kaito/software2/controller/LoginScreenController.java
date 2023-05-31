@@ -8,9 +8,10 @@ import kaito.software2.Main;
 import kaito.software2.model.User;
 import kaito.software2.utilities.Nav;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -32,6 +33,9 @@ public class LoginScreenController extends UserDAO implements Initializable, Nav
     public Label timezoneLabel;
     public static boolean english = true;
     public static boolean french = false;
+    FileWriter fileWriter;
+    PrintWriter printWriter;
+    BufferedWriter writer;
 
 
     // TODO fix language to match system settings
@@ -43,7 +47,7 @@ public class LoginScreenController extends UserDAO implements Initializable, Nav
         Locale currentLocale = Locale.getDefault();
         timezone.setText(String.valueOf(ZoneId.systemDefault()));
         setLanguage(currentLocale.getLanguage());
-        System.out.println(currentLocale);
+
     }
 
     public void setLanguage(String language) {
@@ -76,13 +80,22 @@ public class LoginScreenController extends UserDAO implements Initializable, Nav
      * @throws IOException
      */
     public void login() throws IOException, SQLException {
+
+        FileWriter writer = new FileWriter("src/login_activity.txt", true);
+
         AppointmentDAO appointmentDAO = new AppointmentDAO();
         String username = usernameField.getText();
         String password = passwordField.getText();
         User user = checkLogin(username, password);
         if (user != null) {
+            String successLog = "User " + user.getUserName() + " successfully logged in at " + LocalDateTime.now(ZoneId.of("UTC")) + " UTC\n";
+            writer.append(successLog);
             switchScene("view/appointment-screen.fxml");
             appointmentDAO.checkUpcomingAppointments(user);
+        } else {
+            String failLog = "User " + username + " gave invalid login at " + LocalDateTime.now(ZoneId.of("UTC")) + " UTC\n";
+            writer.append(failLog);
         }
+        writer.close();
     }
 }

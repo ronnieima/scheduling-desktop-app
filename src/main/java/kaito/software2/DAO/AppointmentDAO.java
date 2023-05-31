@@ -3,16 +3,18 @@ package kaito.software2.DAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TextField;
 import kaito.software2.model.Appointment;
 import kaito.software2.model.Contact;
 import kaito.software2.model.Customer;
 import kaito.software2.model.User;
 import kaito.software2.utilities.Validate;
+import static kaito.software2.controller.LoginScreenController.*;
 
-import java.sql.*;
-import java.time.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 
 public class AppointmentDAO implements DAO<Appointment>, Validate {
@@ -43,8 +45,13 @@ public class AppointmentDAO implements DAO<Appointment>, Validate {
         }
         // If there is no appointment found, popup an alert that states that there are no upcoming appointments.
         if (!appointmentFound) {
-            Alert noAppointments = Validate.createAlert(Alert.AlertType.INFORMATION, "No Upcoming Appointment", "You have no upcoming appointments.");
-            noAppointments.showAndWait();
+            if (french = true) {
+                Alert noAppointments = Validate.createAlert(Alert.AlertType.INFORMATION, "No Upcoming Appointment", "Vous n'avez aucun rendez-vous à venir.");
+                noAppointments.showAndWait();
+            } else{
+                Alert noAppointments = Validate.createAlert(Alert.AlertType.INFORMATION, "No Upcoming Appointment", "You have no upcoming appointments.");
+                noAppointments.showAndWait();
+            }
         }
     }
 
