@@ -112,6 +112,7 @@ public class AppointmentScreenController extends AppointmentDAO implements Initi
         apptTable.setItems(getAll());
     }
 
-    public void pullReports(ActionEvent actionEvent) {
+    public void pullReports() throws IOException {
+        switchScene("view/reports.fxml");
     }
 }

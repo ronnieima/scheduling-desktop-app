@@ -103,6 +103,7 @@ public class CustomerScreenController extends CustomerDAO implements Initializab
     public void viewAll(ActionEvent actionEvent) {
     }
 
-    public void pullReports(ActionEvent actionEvent) {
+    public void pullReports(ActionEvent actionEvent) throws IOException {
+        switchScene("view/reports.fxml");
     }
 }

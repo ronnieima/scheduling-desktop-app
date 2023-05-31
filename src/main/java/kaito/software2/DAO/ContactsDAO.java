@@ -11,7 +11,6 @@ import java.sql.SQLException;
 
 public class ContactsDAO implements DAO<Contact>{
 
-
     @Override
     public Contact get(int contactId) throws SQLException {
         Contact contact = null;

@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import kaito.software2.model.Appointment;
+import kaito.software2.model.Contact;
 import kaito.software2.model.Customer;
 import kaito.software2.model.User;
 import kaito.software2.utilities.Validate;
@@ -96,6 +97,31 @@ public class AppointmentDAO implements DAO<Appointment>, Validate {
             customerAppts.add(newAppt);
         }
         return customerAppts;
+    }
+
+    public ObservableList<Appointment> getContactSchedule(Contact contact) throws SQLException {
+        ObservableList<Appointment> contactSchedule = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM appointments WHERE Contact_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, contact.getId());
+
+        ResultSet rs = ps.executeQuery();
+
+        while(rs.next()) {
+            int id = rs.getInt("Appointment_ID");
+            String title = rs.getString("Title");
+            String description = rs.getString("Description");
+            String location = rs.getString("Location");
+            String type = rs.getString("Type");
+            LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+            int customerId = rs.getInt("Customer_ID");
+            int userId = rs.getInt("User_ID");
+            int contactId = rs.getInt("Contact_ID");;
+            Appointment appointment = new Appointment(id, title, description, location,type,start,end,customerId,userId,contactId);
+            contactSchedule.add(appointment);
+        }
+        return contactSchedule;
     }
 
     public ObservableList<Appointment> filterByMonth() throws SQLException {
