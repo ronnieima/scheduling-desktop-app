@@ -3,7 +3,10 @@ package kaito.software2.controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.stage.Stage;
 import kaito.software2.DAO.AppointmentDAO;
 import kaito.software2.DAO.UserDAO;
 import kaito.software2.Main;
@@ -37,15 +40,21 @@ public class LoginScreenController extends UserDAO implements Initializable, Nav
     public static boolean french = false;
 
 
-    // TODO fix language to match system settings
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Locale currentLocale = Locale.getDefault();
         timezone.setText(String.valueOf(ZoneId.systemDefault()));
         setLanguage(currentLocale.getLanguage());
 
-
+        passwordField.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+                try {
+                    login();
+                } catch (IOException | SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     public void setLanguage(String language) {
@@ -78,14 +87,6 @@ public class LoginScreenController extends UserDAO implements Initializable, Nav
      * @throws IOException
      */
     public void login() throws IOException, SQLException {
-        loginButton.setOnAction((event) -> {    // lambda expression
-            Button source = (Button) event.getSource();
-            if(source.isPressed()) {
-                loginButton.setText("Clicked!");
-            } else {
-                loginButton.setText("Click!");
-            }
-        });
 
         FileWriter writer = new FileWriter("src/login_activity.txt", true);
 
