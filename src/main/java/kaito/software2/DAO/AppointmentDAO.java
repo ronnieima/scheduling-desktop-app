@@ -17,6 +17,9 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 
+/**
+ *  DAO class for appointments
+ */
 public class AppointmentDAO implements DAO<Appointment>, Validate {
 
     /**
@@ -55,6 +58,13 @@ public class AppointmentDAO implements DAO<Appointment>, Validate {
         }
     }
 
+    /**
+     * Checks if an customer has overlapping appointments
+     * @param appointment Appointment to check
+     * @param givenStartLocal Appointment Start
+     * @param givenEndLocal Appointment End
+     * @return Boolean of true or false
+     */
     public boolean checkOverlappingAppointments(Appointment appointment, LocalDateTime givenStartLocal, LocalDateTime givenEndLocal) throws SQLException {
         String sql = "SELECT * FROM appointments WHERE Customer_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -84,6 +94,11 @@ public class AppointmentDAO implements DAO<Appointment>, Validate {
         return true;
     }
 
+    /**
+     * Checks if a customer has existing appointments - Used for deletion of customers
+     * @param customer Customer to be checked
+     * @return List of a customer's appointments
+     */
     public ObservableList<Appointment> checkExistingAppointments(Customer customer) throws SQLException {
         ObservableList<Appointment> customerAppts = FXCollections.observableArrayList();
         String sql = "SELECT * FROM appointments WHERE Customer_ID = ?";
@@ -108,7 +123,10 @@ public class AppointmentDAO implements DAO<Appointment>, Validate {
         return customerAppts;
     }
 
-
+    /**
+     * Gets a list of the amount of appointments sorted by type and month - Used for reports
+     * @return List of # of appointments
+     */
     public ObservableList<Appointment> getAppointmentsByTypeAndMonth() throws SQLException {
         ObservableList<Appointment> appointmentsByTypeAndMonth = FXCollections.observableArrayList();
         String sql = "SELECT Type, date_format(start, '%M') as 'Month', COUNT(*) as Total FROM appointments GROUP BY Type, Month ORDER BY Start";
@@ -125,6 +143,11 @@ public class AppointmentDAO implements DAO<Appointment>, Validate {
         return appointmentsByTypeAndMonth;
     }
 
+    /**
+     * Gets an individual contact's appointment schedule
+     * @param contact Contact to check
+     * @return List of appointments for contact
+     */
     public ObservableList<Appointment> getContactSchedule(Contact contact) throws SQLException {
         ObservableList<Appointment> contactSchedule = FXCollections.observableArrayList();
         String sql = "SELECT * FROM appointments WHERE Contact_ID = ?";
@@ -150,6 +173,10 @@ public class AppointmentDAO implements DAO<Appointment>, Validate {
         return contactSchedule;
     }
 
+    /**
+     * Gets a list of appointments within the current month
+     * @return a list of appointments within the current month
+     */
     public ObservableList<Appointment> filterByMonth() throws SQLException {
         ObservableList appointmentsByMonth = FXCollections.observableArrayList();
         String sql = "SELECT * FROM appointments WHERE Start BETWEEN ? AND ?";
@@ -183,6 +210,10 @@ public class AppointmentDAO implements DAO<Appointment>, Validate {
         return appointmentsByMonth;
     }
 
+    /**
+     * Gets a list of appointments within the current week
+     * @return a list of appointments within the current week
+     */
     public ObservableList<Appointment> filterByWeek() throws SQLException {
         ObservableList<Appointment> appointmentsByWeek = FXCollections.observableArrayList();
         String sql = "SELECT * FROM appointments WHERE Start BETWEEN ? AND ?";
@@ -215,6 +246,11 @@ public class AppointmentDAO implements DAO<Appointment>, Validate {
         return appointmentsByWeek;
     }
 
+    /**
+     * Gets an appointment given an appointment ID
+     * @param id ID to check
+     * @return Appointment object
+     */
     @Override
     public Appointment get(int id) throws SQLException {
         String sql = "SELECT * FROM appointments WHERE Appointment_ID = ?";
@@ -238,6 +274,10 @@ public class AppointmentDAO implements DAO<Appointment>, Validate {
         return newAppt;
     }
 
+    /**
+     * Gets a list of all appointments in the database
+     * @return  a list of all appointments in the database
+     */
     public ObservableList<Appointment> getAll() throws SQLException {
         ObservableList<Appointment> allAppts = FXCollections.observableArrayList();
         String sql = "SELECT * FROM appointments";
@@ -261,12 +301,20 @@ public class AppointmentDAO implements DAO<Appointment>, Validate {
         return allAppts;
     }
 
+    /**
+     * Saves current appointment - Unused
+     */
     @Override
     public int save(Appointment appointment) throws SQLException {
         return 0;
     }
 
 
+    /**
+     * Inserts an appointment into the database
+     * @param appt Appointment to insert
+     * @return Number of rows affected
+     */
     public int insert(Appointment appt) throws SQLException {
         String sql = "INSERT INTO appointments (Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ? ,?)";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -284,6 +332,11 @@ public class AppointmentDAO implements DAO<Appointment>, Validate {
         return rowsAffected;
     }
 
+    /**
+     * Updates an appointment's attributes
+     * @param appt Appointment to update
+     * @return Number of rows affected
+     */
     @Override
     public int update(Appointment appt) throws SQLException {
 
@@ -302,6 +355,12 @@ public class AppointmentDAO implements DAO<Appointment>, Validate {
         int rowsAffected = ps.executeUpdate();
         return rowsAffected;
     }
+
+    /**
+     * Deletes an appointment from the database
+     * @param appt Appointment to delete
+     * @return  Number of rows affected
+     */
     @Override
     public int delete(Appointment appt) throws SQLException {
         String sql = "DELETE FROM appointments WHERE Appointment_ID = ?";
