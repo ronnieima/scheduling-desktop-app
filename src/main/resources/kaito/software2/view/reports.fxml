@@ -31,27 +31,27 @@
       </Button>
       <TableView fx:id="reportTable1" layoutX="25.0" layoutY="146.0" prefHeight="328.0" prefWidth="1450.0" style="-fx-border-color: #D9E2Ec; -fx-border-width: 5;">
          <columns>
-            <TableColumn fx:id="id" prefWidth="85.0" text="Appt ID" />
-            <TableColumn fx:id="title" prefWidth="307.0" text="Title" />
-            <TableColumn fx:id="type" prefWidth="147.0" text="Type" />
-            <TableColumn fx:id="desc" prefWidth="333.0" text="Description" />
-            <TableColumn fx:id="startDateTime" prefWidth="187.0" text="Start Date/Time (Local)" />
-            <TableColumn fx:id="endDateTime" minWidth="0.0" prefWidth="269.0" text="End Date/Time (Local)" />
-            <TableColumn fx:id="custId" minWidth="0.0" prefWidth="116.0" text="Customer ID" />
+            <TableColumn fx:id="id" editable="false" prefWidth="85.0" sortable="false" text="Appt ID" />
+            <TableColumn fx:id="title" editable="false" prefWidth="307.0" sortable="false" text="Title" />
+            <TableColumn fx:id="type" editable="false" prefWidth="147.0" sortable="false" text="Type" />
+            <TableColumn fx:id="desc" editable="false" prefWidth="333.0" sortable="false" text="Description" />
+            <TableColumn fx:id="startDateTime" editable="false" prefWidth="187.0" sortable="false" text="Start Date/Time (Local)" />
+            <TableColumn fx:id="endDateTime" editable="false" minWidth="0.0" prefWidth="269.0" sortable="false" text="End Date/Time (Local)" />
+            <TableColumn fx:id="custId" editable="false" minWidth="0.0" prefWidth="116.0" sortable="false" text="Customer ID" />
          </columns>
       </TableView>
       <ComboBox fx:id="contactSelect" layoutX="365.0" layoutY="106.0" onAction="#contactSelectOnAction" prefHeight="28.0" prefWidth="485.0" promptText="Select a contact" />
       <TableView fx:id="reportTable2" layoutX="25.0" layoutY="545.0" prefHeight="427.0" prefWidth="633.0">
         <columns>
-          <TableColumn fx:id="table2MonthCol" prefWidth="162.0" text="Month" />
-          <TableColumn fx:id="table2TypeCol" prefWidth="311.0" text="Type" />
-            <TableColumn fx:id="table2AmtCol" prefWidth="159.0" text="# of Appointments" />
+          <TableColumn fx:id="table2MonthCol" editable="false" prefWidth="162.0" sortable="false" text="Month" />
+          <TableColumn fx:id="table2TypeCol" editable="false" prefWidth="311.0" sortable="false" text="Type" />
+            <TableColumn fx:id="table2AmtCol" editable="false" prefWidth="159.0" sortable="false" text="# of Appointments" />
         </columns>
       </TableView>
       <TableView fx:id="reportTable3" layoutX="834.0" layoutY="545.0" prefHeight="427.0" prefWidth="633.0">
          <columns>
-            <TableColumn fx:id="table3CountryCol" prefWidth="329.0" text="Country" />
-            <TableColumn fx:id="table3AmtCol" prefWidth="303.0" text="# of Appointments" />
+            <TableColumn fx:id="table3CountryCol" editable="false" prefWidth="329.0" sortable="false" text="Country" />
+            <TableColumn fx:id="table3AmtCol" editable="false" prefWidth="303.0" sortable="false" text="# of Customers" />
          </columns>
       </TableView>
       <Label layoutX="25.0" layoutY="92.0" prefHeight="56.0" prefWidth="322.0" text="Schedule for each contact" textFill="WHITE">
@@ -64,7 +64,7 @@
             <Font name="Leelawadee UI" size="28.0" />
          </font>
       </Label>
-      <Label layoutX="834.0" layoutY="489.0" prefHeight="56.0" prefWidth="633.0" text="# of customer appointments by country" textFill="WHITE">
+      <Label layoutX="834.0" layoutY="489.0" prefHeight="56.0" prefWidth="633.0" text="# of customers by country" textFill="WHITE">
          <font>
             <Font name="Leelawadee UI" size="28.0" />
          </font>

@@ -62,13 +62,14 @@ public class ReportsController extends AppointmentDAO implements Initializable, 
         table2TypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         table2AmtCol.setCellValueFactory(new PropertyValueFactory<>("total"));
 
-        table3CountryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
-        table3AmtCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        table3CountryCol.setCellValueFactory(new PropertyValueFactory<>("countryName"));
+        table3AmtCol.setCellValueFactory(new PropertyValueFactory<>("total"));
 
         ContactsDAO contactsDAO = new ContactsDAO();
         try {
             contactSelect.setItems(contactsDAO.getAll());
             reportTable2.setItems(getAppointmentsByTypeAndMonth());
+            reportTable3.setItems(getAppointmentsByCountry());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

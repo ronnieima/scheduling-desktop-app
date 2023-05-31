@@ -16,6 +16,7 @@ public class Appointment {
     private String description;
     private String location;
     private String type;
+    private String countryName;
     private LocalDateTime start;
     private LocalDateTime end;
     private int customerId;
@@ -47,10 +48,29 @@ public class Appointment {
         this.contactId = contactId;
     }
 
+    /**
+     * Constructor for reports to get the total number of customer appointments by type and month
+     * @param month
+     * @param type
+     * @param total
+     */
     public Appointment(Month month, String type, int total) {
         this.month = month;
         this.type = type;
         this.total = total;
+    }
+
+    public Appointment(int total, String countryName) {
+        this.total = total;
+        this.countryName = countryName;
+    }
+
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
     }
 
     public int getTotal() {
