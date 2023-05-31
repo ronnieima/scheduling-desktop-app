@@ -2,29 +2,24 @@ package kaito.software2;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
-import kaito.software2.DAO.*;
-import kaito.software2.model.Customer;
+import kaito.software2.DAO.JDBC;
 import kaito.software2.utilities.Validate;
-
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import static kaito.software2.controller.LoginScreenController.*;
 
 
 /**
  *
  */
-public class Main extends Application {
+public class Main extends Application implements Validate{
 
     private static Stage stage;
     public static final LocalTime OPENING_TIME = LocalTime.of(8, 00);
@@ -36,12 +31,22 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("view/login-screen.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1300, 800);
         stage.setResizable(false);
-        stage.setTitle("Appointment Scheduler - Login");
         stage.setScene(scene);
         stage.show();
 
         stage.setOnCloseRequest(windowEvent -> {
-            Platform.exit();
+            Alert exitConf;
+            if(french = true) {
+                exitConf = Validate.createAlert(Alert.AlertType.CONFIRMATION, "Sortie", "Voulez-vous vraiment quitter ?");
+            } else {
+                exitConf = Validate.createAlert(Alert.AlertType.CONFIRMATION, "Exit", "Are you sure you would like to exit?");
+            }
+
+            if (exitConf.showAndWait().get() == ButtonType.OK) {
+                Platform.exit();
+            } else {
+                windowEvent.consume();
+            }
         });
     }
     public static void main(String[] args) throws SQLException {

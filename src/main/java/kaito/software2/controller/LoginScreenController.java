@@ -1,5 +1,7 @@
 package kaito.software2.controller;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import kaito.software2.DAO.AppointmentDAO;
@@ -33,20 +35,16 @@ public class LoginScreenController extends UserDAO implements Initializable, Nav
     public Label timezoneLabel;
     public static boolean english = true;
     public static boolean french = false;
-    FileWriter fileWriter;
-    PrintWriter printWriter;
-    BufferedWriter writer;
 
 
     // TODO fix language to match system settings
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Main.getStage().setTitle("Appointment Scheduler - Login");
-
         Locale currentLocale = Locale.getDefault();
         timezone.setText(String.valueOf(ZoneId.systemDefault()));
         setLanguage(currentLocale.getLanguage());
+
 
     }
 
@@ -80,6 +78,14 @@ public class LoginScreenController extends UserDAO implements Initializable, Nav
      * @throws IOException
      */
     public void login() throws IOException, SQLException {
+        loginButton.setOnAction((event) -> {    // lambda expression
+            Button source = (Button) event.getSource();
+            if(source.isPressed()) {
+                loginButton.setText("Clicked!");
+            } else {
+                loginButton.setText("Click!");
+            }
+        });
 
         FileWriter writer = new FileWriter("src/login_activity.txt", true);
 
