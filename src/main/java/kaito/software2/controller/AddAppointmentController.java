@@ -24,6 +24,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for the add appointment screen
+ */
 public class AddAppointmentController extends AppointmentDAO implements Initializable, Validate, Nav {
     public TextField id;
     public TextField title;
@@ -42,6 +45,11 @@ public class AddAppointmentController extends AppointmentDAO implements Initiali
     LocalTime start = LocalTime.of(0, 0 );
     LocalTime end = LocalTime.of(23, 0 );
 
+    /**
+     * Initializer method which populates start and end time for the combo boxes
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Main.getStage().setTitle("Appointment Scheduler - Add Appointment");
@@ -64,6 +72,11 @@ public class AddAppointmentController extends AppointmentDAO implements Initiali
 
     }
 
+    /**
+     * Saves all of the inputs and adds the new appointment to the database
+     * @throws IOException Throws IOException
+     * @throws SQLException Throws SQLException
+     */
     public void save() throws IOException, SQLException {
         String title = this.title.getText();
         String desc = this.desc.getText();
@@ -93,6 +106,10 @@ public class AddAppointmentController extends AppointmentDAO implements Initiali
         }
     }
 
+    /**
+     * Returns back to the appointment screen
+     * @throws IOException Throws IOException
+     */
     public void cancel() throws IOException {
         switchScene("view/appointment-screen.fxml");
     }

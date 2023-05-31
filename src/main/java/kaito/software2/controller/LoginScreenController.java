@@ -1,19 +1,19 @@
 package kaito.software2.controller;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.stage.Stage;
 import kaito.software2.DAO.AppointmentDAO;
 import kaito.software2.DAO.UserDAO;
 import kaito.software2.Main;
 import kaito.software2.model.User;
 import kaito.software2.utilities.Nav;
 
-import java.io.*;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -22,7 +22,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * ERROR: I thought jp was the langauge code but i discovered it was ja
+ * Controller class for the login screen
  */
 public class LoginScreenController extends UserDAO implements Initializable, Nav {
 
@@ -39,7 +39,11 @@ public class LoginScreenController extends UserDAO implements Initializable, Nav
     public static boolean english = true;
     public static boolean french = false;
 
-
+    /**
+     * Initialize method that sets the local system's language and time zone.
+     * LAMBDA FUNCTION: I used a lambda function to initiate a login when pressing the ENTER key after entering the password.
+     *                  This makes it so that the user does not have to move the mouse to login.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Locale currentLocale = Locale.getDefault();
@@ -57,6 +61,10 @@ public class LoginScreenController extends UserDAO implements Initializable, Nav
         });
     }
 
+    /**
+     * Sets the language of the login screen
+     *
+     */
     public void setLanguage(String language) {
         if (language.equals("en")) {
             english = true;
@@ -84,7 +92,7 @@ public class LoginScreenController extends UserDAO implements Initializable, Nav
 
     /**
      * Switches to the main screen if user enters the correct login credentials.
-     * @throws IOException
+     * It also writes to a the activity log whenever a user logs in or fails a login.
      */
     public void login() throws IOException, SQLException {
 

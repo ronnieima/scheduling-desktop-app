@@ -22,7 +22,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
-
+/**
+ * Controller class for the modify appointment screen
+ */
 public class ModApptController extends AppointmentDAO implements Initializable, Nav {
     public TextField id;
     public TextField title;
@@ -44,8 +46,6 @@ public class ModApptController extends AppointmentDAO implements Initializable, 
 
     /**
      * Initialize method that sets the title and populates the fields with an Appointment's info to modify
-     * @param url
-     * @param resourceBundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -122,6 +122,9 @@ public class ModApptController extends AppointmentDAO implements Initializable, 
         }
     }
 
+    /**
+     * Navigates back to the appointment screen
+     */
     public void cancel(ActionEvent actionEvent) throws IOException {
         switchScene("view/appointment-screen.fxml");
     }

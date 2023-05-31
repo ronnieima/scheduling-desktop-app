@@ -20,6 +20,9 @@ import java.sql.SQLException;
 import java.time.Month;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for the reports screen
+ */
 public class ReportsController extends AppointmentDAO implements Initializable, Nav {
     public Button viewApptsButton;
 
@@ -44,8 +47,6 @@ public class ReportsController extends AppointmentDAO implements Initializable, 
 
     /**
      * Sets up the TableViews and populates the contact ComboBox upon initialization
-     * @param url
-     * @param resourceBundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

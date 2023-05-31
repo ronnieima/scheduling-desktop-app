@@ -1,6 +1,5 @@
 package kaito.software2.controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -8,18 +7,18 @@ import kaito.software2.DAO.AppointmentDAO;
 import kaito.software2.Main;
 import kaito.software2.model.Appointment;
 import kaito.software2.utilities.Nav;
-import kaito.software2.utilities.Validate;
 
 import java.io.IOException;
 import java.net.URL;
-import java.nio.channels.SelectableChannel;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import static kaito.software2.utilities.Validate.createAlert;
 import static kaito.software2.utilities.Validate.popupError;
 
-
+/**
+ * Controller class for the appointment screen
+ */
 public class AppointmentScreenController extends AppointmentDAO implements Initializable, Nav {
 
     public Button logoutButton;
@@ -40,6 +39,9 @@ public class AppointmentScreenController extends AppointmentDAO implements Initi
     public TableColumn custId;
     public TableColumn userId;
 
+    /**
+     * Initialize method which sets up the table view
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Main.getStage().setTitle("Appointment Scheduler - My Appointments");
@@ -61,19 +63,31 @@ public class AppointmentScreenController extends AppointmentDAO implements Initi
 
     }
 
-    public void logout(ActionEvent actionEvent) throws IOException {
+    /**
+     * Logs out of the program
+     */
+    public void logoutOnAction() throws IOException {
         logout();
     }
 
-    public void viewCustomers(ActionEvent actionEvent) throws IOException {
+    /**
+     * Navigates to customer screen
+     */
+    public void viewCustomers() throws IOException {
         switchScene("view/customer-screen.fxml");
     }
 
-    public void addAppointment(ActionEvent actionEvent) throws IOException {
+    /**
+     * Navigates to add appointment screen
+     */
+    public void addAppointment() throws IOException {
         switchScene("view/add-appointment.fxml");
     }
 
-    public void modifyAppointment(ActionEvent actionEvent) throws IOException {
+    /**
+     * Navigates to modify appointment screen
+     */
+    public void modifyAppointment() {
         try {
             Appointment selectedAppt = apptTable.getSelectionModel().getSelectedItem();
 
@@ -84,7 +98,10 @@ public class AppointmentScreenController extends AppointmentDAO implements Initi
         }
     }
 
-    public void deleteAppointment(ActionEvent actionEvent) throws IOException, SQLException {
+    /**
+     * Deletes a selected appointment from the database
+     */
+    public void deleteAppointment() throws SQLException {
         Appointment selectedAppt = apptTable.getSelectionModel().getSelectedItem();
 
         if (selectedAppt != null) {
@@ -100,18 +117,29 @@ public class AppointmentScreenController extends AppointmentDAO implements Initi
         }
     }
 
-    public void viewByMonth(ActionEvent actionEvent) throws SQLException {
+    /**
+     * Radio button which filters the appointments by the current month
+     */
+    public void viewByMonth() throws SQLException {
         apptTable.setItems(filterByMonth());
     }
-
-    public void viewByWeek(ActionEvent actionEvent) throws SQLException {
+    /**
+     * Radio button which filters the appointments by the week
+     */
+    public void viewByWeek() throws SQLException {
         apptTable.setItems(filterByWeek());
     }
 
-    public void viewAll(ActionEvent actionEvent) throws SQLException {
+    /**
+     * Radio button which shows all of the appointments
+     */
+    public void viewAll() throws SQLException {
         apptTable.setItems(getAll());
     }
 
+    /**
+     * Navigates to the reports screen
+     */
     public void pullReports() throws IOException {
         switchScene("view/reports.fxml");
     }

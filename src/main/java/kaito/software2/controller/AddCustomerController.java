@@ -1,28 +1,28 @@
 package kaito.software2.controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import kaito.software2.DAO.CountryDAO;
 import kaito.software2.DAO.CustomerDAO;
 import kaito.software2.DAO.DivisionDAO;
 import kaito.software2.Main;
-import kaito.software2.model.*;
+import kaito.software2.model.Country;
+import kaito.software2.model.Customer;
+import kaito.software2.model.FirstLevelDivision;
 import kaito.software2.utilities.Nav;
 import kaito.software2.utilities.Validate;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ResourceBundle;
 
-public class AddCustController extends CustomerDAO implements Initializable, Nav  {
+/**
+ * Controller class for the add customer screen
+ */
+public class AddCustomerController extends CustomerDAO implements Initializable, Nav  {
     public TextField id;
     public TextField name;
     public TextField address;
@@ -35,7 +35,11 @@ public class AddCustController extends CustomerDAO implements Initializable, Nav
     CountryDAO countryDAO = new CountryDAO();
     DivisionDAO divisionDAO = new DivisionDAO();
 
-    //TODO finish this hoe with validation
+    /**
+     * Initializer method which populates the country combo box
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Main.getStage().setTitle("Appointment Scheduler - Add Customer");
@@ -47,7 +51,10 @@ public class AddCustController extends CustomerDAO implements Initializable, Nav
         }
     }
 
-    public void save(ActionEvent actionEvent) throws IOException, SQLException {
+    /**
+     * Saves all of the attributes and adds a customer to the database
+     */
+    public void save() throws IOException, SQLException {
         String name = this.name.getText();
         String address = this.address.getText();
         String postalCode = this.postalCode.getText();
@@ -64,7 +71,10 @@ public class AddCustController extends CustomerDAO implements Initializable, Nav
         }
     }
 
-    public void cancel(ActionEvent actionEvent) throws IOException {
+    /**
+     * Returns back to the customer screen
+     */
+    public void cancel() throws IOException {
         switchScene("view/customer-screen.fxml");
     }
 

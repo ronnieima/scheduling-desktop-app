@@ -19,6 +19,9 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for the modify customer screen
+ */
 public class ModCustController extends CustomerDAO implements Initializable, Nav {
     public TextField id;
     public TextField name;
@@ -33,6 +36,9 @@ public class ModCustController extends CustomerDAO implements Initializable, Nav
     DivisionDAO divisionDAO = new DivisionDAO();
     CountryDAO countryDAO = new CountryDAO();
 
+    /**
+     * Initialize class which sets and populates the selected customer's attributes for all fields except ID
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Main.getStage().setTitle("Appointment Scheduler - Modify Customer");
@@ -95,6 +101,9 @@ public class ModCustController extends CustomerDAO implements Initializable, Nav
         switchScene("view/customer-screen.fxml");
     }
 
+    /**
+     * Navigates back to the customer screen
+     */
     public void cancel() throws IOException {
         switchScene("view/customer-screen.fxml");
     }
