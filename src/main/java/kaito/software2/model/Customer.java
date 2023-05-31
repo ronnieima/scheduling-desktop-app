@@ -1,8 +1,8 @@
 package kaito.software2.model;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
+/**
+ * Model class for customer
+ */
 public class Customer {
 
     private int id;
@@ -11,8 +11,16 @@ public class Customer {
     private String postalCode;
     private String phone;
     private int divisionId;
-    private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
+    /**
+     * Constructor for a customer
+     * @param id Customer's id
+     * @param name Customer's name
+     * @param address Customer's address
+     * @param postalCode Customer's postalCode
+     * @param phone Customer's phone
+     * @param divisionId Customer's divisionId
+     */
     public Customer(int id, String name, String address, String postalCode, String phone, int divisionId) {
         this.id = id;
         this.name = name;
@@ -22,6 +30,14 @@ public class Customer {
         this.divisionId = divisionId;
     }
 
+    /**
+     * Constructor for a customer without the ID - used to add to database
+     * @param name  Customer name
+     * @param address Customer address
+     * @param postalCode Customer postalCode
+     * @param phone Customer phone
+     * @param divisionId Customer divisionId
+     */
     public Customer(String name, String address, String postalCode, String phone, int divisionId) {
         this.name = name;
         this.address = address;
@@ -30,63 +46,56 @@ public class Customer {
         this.divisionId = divisionId;
     }
 
+    /**
+     * Overridden method which displays its attributes as a String
+     * @return Customer's attributes as a String
+     */
     @Override
     public String toString() {
         return name + " | ID: " + id + " | Phone: " + phone;
     }
 
+    /**
+     * Getter for ID
+     * @return Customer ID
+     */
     public int getId() {
         return id;
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
+       /**
+     * Getter for name
+     * @return Customer name
+     */
     public String getName() {
         return name;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
+       /**
+     * Getter for address
+     * @return Customer address
+     */
     public String getAddress() {
         return address;
     }
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
+       /**
+     * Getter for postalCode
+     * @return Customer postalCode
+     */
     public String getPostalCode() {
         return postalCode;
     }
-
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
-    }
-
+       /**
+     * Getter for phone
+     * @return Customer phone
+     */
     public String getPhone() {
         return phone;
     }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public static ObservableList<Customer> getAllCustomers() {
-        return allCustomers;
-    }
-
-    public void setAllCustomers(ObservableList<Customer> allCustomers) {
-        this.allCustomers = allCustomers;
-    }
-
+    /**
+     * Getter for divisionId
+     * @return Customer divisionId
+     */
     public int getDivisionId() {
         return divisionId;
     }
 
-    public void setDivisionId(int divisionId) {
-        this.divisionId = divisionId;
-    }
 }
