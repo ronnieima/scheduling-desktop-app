@@ -1,8 +1,12 @@
 package kaito.software2.utilities;
 
 import javafx.scene.control.Alert;
+import kaito.software2.model.Appointment;
 
 import java.time.*;
+
+import static kaito.software2.Main.CLOSING_TIME;
+import static kaito.software2.Main.OPENING_TIME;
 
 public interface Validate {
 
@@ -36,7 +40,42 @@ public interface Validate {
                 Alert overlappingAppt = createAlert(Alert.AlertType.ERROR, "Error", "This customer already has an appointment scheduled within those times.");
                 overlappingAppt.showAndWait();
                 break;
+            case 6: // outside business hours error
+                Alert outsideBusinessHours = createAlert(Alert.AlertType.ERROR, "Error", "Appointment is outside the business hours of 0800-2200 EST.");
+                outsideBusinessHours.showAndWait();
+                break;
+            case 7: // start time after end time error
+                Alert startAfterEnd = createAlert(Alert.AlertType.ERROR, "Error", "Appointment start time is after the end time.");
+                startAfterEnd.showAndWait();
+                break;
         }
+    }
+
+    default boolean isOutsideBusinessHours(Appointment appointment) {
+         LocalTime startEST = LocalTime.from(convertLocalToEst(appointment.getStart()));
+         LocalTime endEST = LocalTime.from(convertLocalToEst(appointment.getEnd()));
+
+         if (startEST.isBefore(OPENING_TIME) || endEST.isAfter(CLOSING_TIME)) {
+             popupError(6);
+             return true;
+         }
+         return false;
+    }
+
+    default boolean checkDate(LocalDate start, LocalDate end) {
+        if (start.isAfter(end)) {
+            popupError(1);
+            return false;
+        }
+        return true;
+    }
+
+    default boolean startTimeIsAfterEndTime(Appointment appointment) {
+        if (appointment.getStart().isAfter(appointment.getEnd())) {
+            popupError(7);
+            return true;
+        }
+        return false;
     }
 
     default LocalDateTime convertEstToUtc(LocalDateTime localDateTime) {
@@ -74,14 +113,6 @@ public interface Validate {
         ZonedDateTime sysDefaultTime = localDateTime.atZone(ZoneId.systemDefault());
         ZonedDateTime convertedTimeUTC = sysDefaultTime.withZoneSameInstant(ZoneId.of("UTC"));
         return convertedTimeUTC.toLocalDateTime();
-    }
-
-    default boolean checkDate(LocalDate start, LocalDate end) {
-        if (start.isAfter(end)) {
-            popupError(1);
-            return false;
-        }
-        return true;
     }
 
 }

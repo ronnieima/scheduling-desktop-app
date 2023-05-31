@@ -12,7 +12,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="850.0" style="-fx-background-color: #102A43;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kaito.software2.controller.AddAppointmentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="850.0" style="-fx-background-color: #102A43;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kaito.software2.controller.AddAppointmentController">
    <children>
       <VBox layoutX="400.0" layoutY="172.0" prefHeight="687.0" prefWidth="400.0" spacing="20.0">
          <children>
@@ -71,7 +71,7 @@
                   <Font name="Leelawadee UI" size="39.0" />
                </font>
             </Label>
-            <Label prefHeight="56.0" prefWidth="274.0" text="Start Time" textFill="WHITE">
+            <Label prefHeight="56.0" prefWidth="274.0" text="Start Time (EST)" textFill="WHITE">
                <font>
                   <Font name="Leelawadee UI" size="39.0" />
                </font>
@@ -81,7 +81,7 @@
                   <Font name="Leelawadee UI" size="39.0" />
                </font>
             </Label>
-            <Label prefHeight="0.0" prefWidth="274.0" text="End Time" textFill="WHITE">
+            <Label prefHeight="0.0" prefWidth="274.0" text="End Time (EST)" textFill="WHITE">
                <font>
                   <Font name="Leelawadee UI" size="39.0" />
                </font>

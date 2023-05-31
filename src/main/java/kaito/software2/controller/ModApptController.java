@@ -18,7 +18,6 @@ import kaito.software2.utilities.Validate;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
@@ -40,8 +39,8 @@ public class ModApptController extends AppointmentDAO implements Initializable, 
     public ComboBox<User> users;
     public ComboBox<Contact> contacts;
     public static Appointment appt = null;
-    LocalTime start = LocalTime.of(8, 0 );
-    LocalTime end = LocalTime.of(22, 0 );
+    LocalTime start = LocalTime.of(0, 0 );
+    LocalTime end = LocalTime.of(23, 0 );
 
     /**
      * Initialize method that sets the title and populates the fields with an Appointment's info to modify
@@ -56,7 +55,6 @@ public class ModApptController extends AppointmentDAO implements Initializable, 
         UserDAO userDAO = new UserDAO();
         ContactsDAO contactsDAO = new ContactsDAO();
 
-        //TODO fix timezones
         // Populates start and end time combo boxes with times
         while (start.isBefore(end.plusSeconds(1))) {
             startTime.getItems().add(start);
@@ -109,12 +107,15 @@ public class ModApptController extends AppointmentDAO implements Initializable, 
         int userId = users.getValue().getUserId();
         int contactId = contacts.getValue().getId();
         Appointment newAppt = new Appointment(id,title, desc, location, type, start, end, custId, userId, contactId);
+
         try {
-            if (checkDate(this.startDate.getValue(), this.endDate.getValue()) && checkOverlappingAppointments(this.customers.getValue(), start, end)) {
-                update(newAppt);
-                switchScene("view/appointment-screen.fxml");
-            } else {
-                Validate.popupError(5);
+            if(!isOutsideBusinessHours(newAppt) && !startTimeIsAfterEndTime(newAppt)) {
+                if (checkDate(this.startDate.getValue(), this.endDate.getValue()) && checkOverlappingAppointments(newAppt, start, end)) {
+                    update(newAppt);
+                    switchScene("view/appointment-screen.fxml");
+                } else {
+                    Validate.popupError(5);
+                }
             }
         } catch (NullPointerException e) {
             Validate.popupError(2);

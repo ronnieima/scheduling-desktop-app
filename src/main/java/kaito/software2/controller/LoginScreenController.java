@@ -12,6 +12,8 @@ import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import static kaito.software2.utilities.Validate.createAlert;
+
 /**
  * ERROR: I thought jp was the langauge code but i discovered it was ja
  */
@@ -79,6 +81,9 @@ public class LoginScreenController implements Initializable, Nav {
         // check if username is valid
         // take username and compare it with password
         switchScene("view/appointment-screen.fxml");
+
+
+            createAlert(Alert.AlertType.INFORMATION, "Upcoming Appointments", "You have an upcoming appointment within 15 minutes!");
     }
 
 }

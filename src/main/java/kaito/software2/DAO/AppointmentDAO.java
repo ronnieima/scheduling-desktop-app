@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import kaito.software2.model.Appointment;
 import kaito.software2.model.Customer;
+import kaito.software2.model.User;
 import kaito.software2.utilities.Validate;
 
 import java.sql.*;
@@ -14,27 +15,32 @@ import java.time.temporal.TemporalAdjusters;
 
 public class AppointmentDAO implements DAO<Appointment>, Validate {
 
-    public boolean checkOverlappingAppointments(Customer customer, LocalDateTime givenStart, LocalDateTime givenEnd) throws SQLException {
+    public boolean hasUpcomingAppointments (User user) {
+        return true;
+    }
+
+    public boolean checkOverlappingAppointments(Appointment appointment, LocalDateTime givenStartLocal, LocalDateTime givenEndLocal) throws SQLException {
         String sql = "SELECT * FROM appointments WHERE Customer_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setInt(1, customer.getId());
+
+        ps.setInt(1, appointment.getCustomerId());
         ResultSet rs = ps.executeQuery();
 
         while(rs.next()) {
-            int customerId = rs.getInt("Customer_ID");
-            LocalDateTime start = convertUtcToLocal(rs.getTimestamp("Start").toLocalDateTime());
-            LocalDateTime end = convertUtcToLocal(rs.getTimestamp("End").toLocalDateTime());
-            if (customerId != customer.getId()) {
+            int appointmentId = rs.getInt("Appointment_ID");
+            LocalDateTime startLocal = (rs.getTimestamp("Start").toLocalDateTime());
+             LocalDateTime endLocal = (rs.getTimestamp("End").toLocalDateTime());
+            if (appointmentId != appointment.getId()) {
                 // Checks if appointment start is within the window
-                if ((givenStart.isAfter(start) || givenStart.equals(start)) && givenStart.isBefore(end)) {
-                    // Checks if appointment end is within the window
-                    if (end.isAfter(givenStart) && (end.isBefore(givenEnd) || end.isEqual(givenEnd))) {
-                        // Checks if appointment start and end are both outside of the window
-                        if ((givenStart.isBefore(start) || givenStart.isEqual(start)) && (givenEnd.isAfter(end) || givenStart.isEqual(end))) {
-                            return false;
-                        }
-                        return false;
-                    }
+                if ((givenStartLocal.isAfter(startLocal) || givenStartLocal.equals(startLocal)) && givenStartLocal.isBefore(endLocal)) {
+                    return false;
+                }
+                // Checks if appointment end is within the window
+                if (endLocal.isAfter(givenStartLocal) && (endLocal.isBefore(givenEndLocal) || endLocal.isEqual(givenEndLocal))) {
+                    return false;
+                }
+                // Checks if appointment start and end are both outside of the window
+                if ((givenStartLocal.isBefore(startLocal) || givenStartLocal.isEqual(startLocal)) && (givenEndLocal.isAfter(endLocal) || givenStartLocal.isEqual(endLocal))) {
                     return false;
                 }
             }

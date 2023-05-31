@@ -39,8 +39,8 @@ public class AddAppointmentController extends AppointmentDAO implements Initiali
     public ComboBox<Customer> customers;
     public ComboBox<User> users;
     public ComboBox<Contact> contacts;
-    LocalTime start = LocalTime.of(8, 0 );
-    LocalTime end = LocalTime.of(22, 0 );
+    LocalTime start = LocalTime.of(0, 0 );
+    LocalTime end = LocalTime.of(23, 0 );
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -75,12 +75,11 @@ public class AddAppointmentController extends AppointmentDAO implements Initiali
         LocalDateTime start = convertEstToLocal(LocalDateTime.of(startDate.getValue(), startTime.getValue()));
         LocalDateTime end = convertEstToLocal(LocalDateTime.of(endDate.getValue(), endTime.getValue()));
 
-        // converts start and end times from EST to UTC
         Appointment appointment = new Appointment(title, desc, location, type, start, end, customer.getId(), user.getUserId(), contact.getId());
 
         try {
             if (checkDate(this.startDate.getValue(), this.endDate.getValue())) {
-                if (checkOverlappingAppointments(customer, start, end)) {
+                if (checkOverlappingAppointments(appointment, start, end)) {
                     insert(appointment);
                     switchScene("view/appointment-screen.fxml");
                 } else {
