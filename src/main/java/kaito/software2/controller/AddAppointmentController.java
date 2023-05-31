@@ -52,7 +52,7 @@ public class AddAppointmentController extends AppointmentDAO implements Initiali
         while (start.isBefore(end.plusSeconds(1))) {
             startTime.getItems().add(start);
             endTime.getItems().add(start);
-            start = start.plusMinutes(30);
+            start = start.plusMinutes(15);
         }
         try {
             customers.setItems(customerDAO.getAll());

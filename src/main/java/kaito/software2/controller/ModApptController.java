@@ -59,7 +59,7 @@ public class ModApptController extends AppointmentDAO implements Initializable, 
         while (start.isBefore(end.plusSeconds(1))) {
             startTime.getItems().add(start);
             endTime.getItems().add(start);
-            start = start.plusMinutes(30);
+            start = start.plusMinutes(15);
         }
         try {
             customers.setItems(customerDAO.getAll());

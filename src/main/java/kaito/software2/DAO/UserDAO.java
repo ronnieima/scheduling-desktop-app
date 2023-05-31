@@ -35,7 +35,7 @@ public class UserDAO implements DAO<User>{
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
 
-        while(rs.next()) {
+        if (rs.next()) {
             int newId = rs.getInt("User_ID");
             String name = rs.getString("User_Name");
             String password = rs.getString("Password");

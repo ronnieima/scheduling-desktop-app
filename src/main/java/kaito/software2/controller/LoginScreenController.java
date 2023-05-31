@@ -25,13 +25,11 @@ public class LoginScreenController extends UserDAO implements Initializable, Nav
     public Button loginButton;
     public TextField usernameField;
     public Label loginLabel;
-    public ChoiceBox<String> languageChoiceBox;
     public PasswordField passwordField;
     public Label passwordLabel;
     public Label usernameLabel;
-    public Label languageLabel;
     public Label timezone;
-    private String[] languageList = {"ENGLISH", "FRENCH"};
+    public Label timezoneLabel;
     public static boolean english = true;
     public static boolean french = false;
 
@@ -41,10 +39,11 @@ public class LoginScreenController extends UserDAO implements Initializable, Nav
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Main.getStage().setTitle("Appointment Scheduler - Login");
-        timezone.setText(String.valueOf(ZoneId.systemDefault()));
 
         Locale currentLocale = Locale.getDefault();
-        setLanguage(currentLocale.toString());
+        timezone.setText(String.valueOf(ZoneId.systemDefault()));
+        setLanguage(currentLocale.getLanguage());
+        System.out.println(currentLocale);
     }
 
     public void setLanguage(String language) {
@@ -56,7 +55,6 @@ public class LoginScreenController extends UserDAO implements Initializable, Nav
             usernameField.setPromptText(enBundle.getString("enterUsername"));
             passwordLabel.setText(enBundle.getString("password"));
             passwordField.setPromptText(enBundle.getString("enterPassword"));
-            languageLabel.setText(enBundle.getString("language"));
             loginButton.setText(enBundle.getString("login"));
             Main.getStage().setTitle(enBundle.getString("login"));
         } else if (language.equals("fr")) {
@@ -67,8 +65,8 @@ public class LoginScreenController extends UserDAO implements Initializable, Nav
             usernameField.setPromptText(frBundle.getString("enterUsername"));
             passwordLabel.setText(frBundle.getString("password"));
             passwordField.setPromptText(frBundle.getString("enterPassword"));
-            languageLabel.setText(frBundle.getString("language"));
             loginButton.setText(frBundle.getString("login"));
+            timezoneLabel.setText(frBundle.getString("timezone"));
             Main.getStage().setTitle(frBundle.getString("login"));
         }
     }

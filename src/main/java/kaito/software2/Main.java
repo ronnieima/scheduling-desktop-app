@@ -32,7 +32,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException, SQLException {
-        Locale.setDefault(Locale.ENGLISH);
         this.stage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("view/login-screen.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1300, 800);
