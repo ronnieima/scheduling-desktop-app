@@ -37,7 +37,7 @@ public class AppointmentDAO implements DAO<Appointment>, Validate {
 
             if (startDateTimeLocal.isBefore(fifteenMinutesAfterNow) && startDateTimeLocal.isAfter(LocalDateTime.now())) {
                 appointmentFound = true;
-                Alert upcomingAppointment = Validate.createAlert(Alert.AlertType.INFORMATION, "Upcoming Appointment", "You have an upcoming appointment within 15 minutes! " + appointmentId + startDateTimeLocal);
+                Alert upcomingAppointment = Validate.createAlert(Alert.AlertType.INFORMATION, "Upcoming Appointment", "You have an upcoming appointment within 15 minutes! " + appointmentId + " " + startDateTimeLocal);
                 upcomingAppointment.showAndWait();
             }
         }
@@ -101,24 +101,6 @@ public class AppointmentDAO implements DAO<Appointment>, Validate {
         return customerAppts;
     }
 
-    public ObservableList<Appointment> getAppointmentsByCountry() throws SQLException {
-        ObservableList<Appointment> appointmentsByCountry = FXCollections.observableArrayList();
-        String sql = "SELECT Country , COUNT(Country) as 'Total Customers' " +
-                "FROM first_level_divisions " +
-                "JOIN countries ON first_level_divisions.Country_ID=countries.Country_ID " +
-                "JOIN customers ON first_level_divisions.Division_ID=customers.Division_ID " +
-                "GROUP BY Country";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-
-        while(rs.next()) {
-            String countryName = rs.getString("Country");
-            int total = rs.getInt("Total Customers");
-            Appointment newAppointment = new Appointment(total, countryName);
-            appointmentsByCountry.add(newAppointment);
-        }
-        return appointmentsByCountry;
-    }
 
     public ObservableList<Appointment> getAppointmentsByTypeAndMonth() throws SQLException {
         ObservableList<Appointment> appointmentsByTypeAndMonth = FXCollections.observableArrayList();

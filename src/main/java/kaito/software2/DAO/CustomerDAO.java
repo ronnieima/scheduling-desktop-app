@@ -15,7 +15,29 @@ import java.time.LocalTime;
 
 public class CustomerDAO implements DAO<Customer>, Validate {
 
+    /**
+     * Used to get reports for how many customers are in each country.
+     * @return
+     * @throws SQLException
+     */
+    public ObservableList<Appointment> getCustomersByCountry() throws SQLException {
+        ObservableList<Appointment> customersByCountry = FXCollections.observableArrayList();
+        String sql = "SELECT Country , COUNT(Country) as 'Total Customers' " +
+                "FROM first_level_divisions " +
+                "JOIN countries ON first_level_divisions.Country_ID=countries.Country_ID " +
+                "JOIN customers ON first_level_divisions.Division_ID=customers.Division_ID " +
+                "GROUP BY Country";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
 
+        while(rs.next()) {
+            String countryName = rs.getString("Country");
+            int total = rs.getInt("Total Customers");
+            Appointment newAppointment = new Appointment(total, countryName);
+            customersByCountry.add(newAppointment);
+        }
+        return customersByCountry;
+    }
 
     @Override
     public Customer get(int id) throws SQLException {

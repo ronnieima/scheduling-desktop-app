@@ -76,17 +76,18 @@ public class LoginScreenController extends UserDAO implements Initializable, Nav
     }
 
     /**
-     * Switches to the main screen if TODO user and pass is correct.
+     * Switches to the main screen if user enters the correct login credentials.
      * @param actionEvent
      * @throws IOException
      */
     public void login(ActionEvent actionEvent) throws IOException, SQLException {
         AppointmentDAO appointmentDAO = new AppointmentDAO();
-        // get db of users and passses
-        // check if username is valid
-        // take username and compare it with password
-        switchScene("view/appointment-screen.fxml");
-        appointmentDAO.checkUpcomingAppointments(get(1));
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+        User user = checkLogin(username, password);
+        if (user != null) {
+            switchScene("view/appointment-screen.fxml");
+            appointmentDAO.checkUpcomingAppointments(user);
+        }
     }
-
 }

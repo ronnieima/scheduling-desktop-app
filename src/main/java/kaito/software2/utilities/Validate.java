@@ -48,6 +48,10 @@ public interface Validate {
                 Alert startAfterEnd = createAlert(Alert.AlertType.ERROR, "Error", "Appointment start time is after the end time.");
                 startAfterEnd.showAndWait();
                 break;
+            case 8: // invalid login error
+                Alert invalidLogin = createAlert(Alert.AlertType.ERROR, "Error", "Invalid username and/or password.");
+                invalidLogin.showAndWait();
+                break;
         }
     }
 

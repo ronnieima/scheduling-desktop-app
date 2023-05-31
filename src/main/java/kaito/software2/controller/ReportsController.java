@@ -8,6 +8,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import kaito.software2.DAO.AppointmentDAO;
 import kaito.software2.DAO.ContactsDAO;
+import kaito.software2.DAO.CustomerDAO;
 import kaito.software2.Main;
 import kaito.software2.model.Appointment;
 import kaito.software2.model.Contact;
@@ -66,10 +67,11 @@ public class ReportsController extends AppointmentDAO implements Initializable, 
         table3AmtCol.setCellValueFactory(new PropertyValueFactory<>("total"));
 
         ContactsDAO contactsDAO = new ContactsDAO();
+        CustomerDAO customerDAO = new CustomerDAO();
         try {
             contactSelect.setItems(contactsDAO.getAll());
             reportTable2.setItems(getAppointmentsByTypeAndMonth());
-            reportTable3.setItems(getAppointmentsByCountry());
+            reportTable3.setItems(customerDAO.getCustomersByCountry());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
