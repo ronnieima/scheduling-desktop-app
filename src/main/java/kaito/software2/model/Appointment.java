@@ -5,9 +5,12 @@ import javafx.collections.ObservableList;
 import kaito.software2.Main;
 
 import java.time.LocalDateTime;
+import java.time.Month;
 
 public class Appointment {
     public static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+    private int total;
+    private Month month;
     private int id;
     private String title;
     private String description;
@@ -42,6 +45,28 @@ public class Appointment {
         this.customerId = customerId;
         this.userId = userId;
         this.contactId = contactId;
+    }
+
+    public Appointment(Month month, String type, int total) {
+        this.month = month;
+        this.type = type;
+        this.total = total;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public Month getMonth() {
+        return month;
+    }
+
+    public void setMonth(Month month) {
+        this.month = month;
     }
 
     public int getId() {

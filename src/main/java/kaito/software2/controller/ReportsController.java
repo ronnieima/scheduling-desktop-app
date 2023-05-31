@@ -9,12 +9,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import kaito.software2.DAO.AppointmentDAO;
 import kaito.software2.DAO.ContactsDAO;
 import kaito.software2.Main;
+import kaito.software2.model.Appointment;
 import kaito.software2.model.Contact;
 import kaito.software2.utilities.Nav;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.Month;
 import java.util.ResourceBundle;
 
 public class ReportsController extends AppointmentDAO implements Initializable, Nav {
@@ -30,10 +32,10 @@ public class ReportsController extends AppointmentDAO implements Initializable, 
     public TableColumn endDateTime;
     public TableColumn custId;
 
-    public TableView reportTable2;
-    public TableColumn table2MonthCol;
-    public TableColumn table2TypeCol;
-    public TableColumn table2AmtCol;
+    public TableView<Appointment> reportTable2;
+    public TableColumn<Appointment, Month> table2MonthCol;
+    public TableColumn<Appointment, String> table2TypeCol;
+    public TableColumn<Appointment, Integer> table2AmtCol;
 
     public TableView reportTable3;
     public TableColumn table3CountryCol;
@@ -58,7 +60,7 @@ public class ReportsController extends AppointmentDAO implements Initializable, 
 
         table2MonthCol.setCellValueFactory(new PropertyValueFactory<>("month"));
         table2TypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
-        table2AmtCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        table2AmtCol.setCellValueFactory(new PropertyValueFactory<>("total"));
 
         table3CountryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
         table3AmtCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
@@ -66,11 +68,10 @@ public class ReportsController extends AppointmentDAO implements Initializable, 
         ContactsDAO contactsDAO = new ContactsDAO();
         try {
             contactSelect.setItems(contactsDAO.getAll());
+            reportTable2.setItems(getAppointmentsByTypeAndMonth());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
-
     }
 
     /**

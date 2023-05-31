@@ -3,6 +3,8 @@ package kaito.software2.DAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TextField;
 import kaito.software2.model.Appointment;
 import kaito.software2.model.Contact;
 import kaito.software2.model.Customer;
@@ -97,6 +99,22 @@ public class AppointmentDAO implements DAO<Appointment>, Validate {
             customerAppts.add(newAppt);
         }
         return customerAppts;
+    }
+
+    public ObservableList<Appointment> getAppointmentsByTypeAndMonth() throws SQLException {
+        ObservableList<Appointment> appointmentsByTypeAndMonth = FXCollections.observableArrayList();
+        String sql = "SELECT Type, start as 'Month', COUNT(*) as Total FROM appointments GROUP BY Type, Month ORDER BY Start";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        while(rs.next()) {
+            Month month = rs.getTimestamp("Month").toLocalDateTime().getMonth();
+            String type = rs.getString("Type");
+            int total = rs.getInt("Total");
+            Appointment newAppointment = new Appointment(month, type, total);
+            appointmentsByTypeAndMonth.add(newAppointment);
+        }
+        return appointmentsByTypeAndMonth;
     }
 
     public ObservableList<Appointment> getContactSchedule(Contact contact) throws SQLException {
