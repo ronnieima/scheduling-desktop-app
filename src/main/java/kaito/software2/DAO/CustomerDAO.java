@@ -13,12 +13,14 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+/**
+ * DAO class for customers
+ */
 public class CustomerDAO implements DAO<Customer>, Validate {
 
     /**
      * Used to get reports for how many customers are in each country.
-     * @return
-     * @throws SQLException
+     * @return List of how many customers are in each country
      */
     public ObservableList<Appointment> getCustomersByCountry() throws SQLException {
         ObservableList<Appointment> customersByCountry = FXCollections.observableArrayList();
@@ -39,6 +41,11 @@ public class CustomerDAO implements DAO<Customer>, Validate {
         return customersByCountry;
     }
 
+    /**
+     * Gets an customer given an customer ID
+     * @param id ID to check
+     * @return Customer object
+     */
     @Override
     public Customer get(int id) throws SQLException {
         String sql = "SELECT * FROM customers WHERE Customer_ID = ?";
@@ -58,6 +65,10 @@ public class CustomerDAO implements DAO<Customer>, Validate {
         return newCust;
     }
 
+    /**
+     * Gets a list of all customers in the database
+     * @return  a list of all customers in the database
+     */
     public ObservableList<Customer> getAll() throws SQLException {
         ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
         String sql = "SELECT * FROM customers";
@@ -77,11 +88,19 @@ public class CustomerDAO implements DAO<Customer>, Validate {
         return allCustomers;
     }
 
+    /**
+     * Saves current contact - Unused
+     */
     @Override
     public int save(Customer customer) throws SQLException {
         return 0;
     }
 
+    /**
+     * Inserts a customer into the database
+     * @param customer Customer to insert
+     * @return Number of rows affected
+     */
     @Override
     public int insert(Customer customer) throws SQLException {
         String sql = "INSERT INTO customers (Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES (?, ?, ?, ?, ?, ?)";
@@ -96,6 +115,11 @@ public class CustomerDAO implements DAO<Customer>, Validate {
         return rowsAffected;
     }
 
+    /**
+     * Updates an customer's attributes
+     * @param customer Customer to update
+     * @return Number of rows affected
+     */
     @Override
     public int update(Customer customer) throws SQLException {
         String sql = "UPDATE customers set Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? WHERE Customer_ID = ?";
@@ -111,6 +135,11 @@ public class CustomerDAO implements DAO<Customer>, Validate {
         return rowsAffected;
     }
 
+    /**
+     * Deletes an Customer from the database
+     * @param customer Customer to delete
+     * @return  Number of rows affected
+     */
     @Override
     public int delete(Customer customer) throws SQLException {
         String sql = "DELETE FROM customers WHERE Customer_ID = ?";

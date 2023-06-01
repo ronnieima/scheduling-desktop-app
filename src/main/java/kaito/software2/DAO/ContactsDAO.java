@@ -9,8 +9,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * DAO class for contacts
+ */
 public class ContactsDAO implements DAO<Contact>{
 
+    /**
+     * Gets an contact given an contact ID
+     * @param contactId ID to check
+     * @return Contact object
+     */
     @Override
     public Contact get(int contactId) throws SQLException {
         Contact contact = null;
@@ -28,6 +36,10 @@ public class ContactsDAO implements DAO<Contact>{
         return contact;
     }
 
+    /**
+     * Gets a list of all contacts in the database
+     * @return  a list of all contacts in the database
+     */
     public ObservableList<Contact> getAll() throws SQLException {
         ObservableList<Contact> allContacts = FXCollections.observableArrayList();
         String sql = "SELECT * FROM contacts";
@@ -43,22 +55,30 @@ public class ContactsDAO implements DAO<Contact>{
         }
         return allContacts;
     }
-
+        /**
+     * Saves current contact - Unused
+     */
     @Override
     public int save(Contact contact) throws SQLException {
         return 0;
     }
-
+        /**
+     * insert current contact - Unused
+     */
     @Override
     public int insert(Contact contact) throws SQLException {
         return 0;
     }
-
+        /**
+     * update current contact - Unused
+     */
     @Override
     public int update(Contact contact) throws SQLException {
         return 0;
     }
-
+        /**
+     * delete current contact - Unused
+     */
     @Override
     public int delete(Contact contact) throws SQLException {
         return 0;

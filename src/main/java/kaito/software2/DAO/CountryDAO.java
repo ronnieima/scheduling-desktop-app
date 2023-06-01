@@ -10,6 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * DAO class for countries
+ */
 public class CountryDAO implements DAO<Country> {
     @Override
     public Country get(int id) throws SQLException {
@@ -26,6 +29,10 @@ public class CountryDAO implements DAO<Country> {
         return country;
     }
 
+    /**
+     * Gets a list of all countries in the database
+     * @return  a list of all countries in the database
+     */
     @Override
     public ObservableList<Country> getAll() throws SQLException {
         ObservableList<Country> allCountries = FXCollections.observableArrayList();
@@ -43,21 +50,33 @@ public class CountryDAO implements DAO<Country> {
         return allCountries;
     }
 
+    /**
+     * Saves current country - Unused
+     */
     @Override
     public int save(Country country) throws SQLException {
         return 0;
     }
 
+    /**
+     * Inserts current country - Unused
+     */
     @Override
     public int insert(Country country) throws SQLException {
         return 0;
     }
 
+    /**
+     * Updates current country - Unused
+     */
     @Override
     public int update(Country country) throws SQLException {
         return 0;
     }
 
+    /**
+     * Deletes current country - Unused
+     */
     @Override
     public int delete(Country country) throws SQLException {
         return 0;

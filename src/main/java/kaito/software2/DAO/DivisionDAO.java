@@ -15,7 +15,6 @@ public class DivisionDAO implements DAO<FirstLevelDivision> {
      * Takes a country ID and returns an array with its divisions.
      * @param countryId Country to filter by
      * @return ObservableList of divisions by selected country
-     * @throws SQLException
      */
     public ObservableList<FirstLevelDivision> getDivisionsByCountry(int countryId) throws SQLException {
         ObservableList<FirstLevelDivision> countryDivisions = FXCollections.observableArrayList();
@@ -34,6 +33,11 @@ public class DivisionDAO implements DAO<FirstLevelDivision> {
         return countryDivisions;
     }
 
+    /**
+     * Gets an division given an division ID
+     * @param id ID to check
+     * @return FirstLevelDivision object
+     */
     @Override
     public FirstLevelDivision get(int id) throws SQLException {
         String sql = "SELECT * FROM first_level_divisions WHERE Division_ID = ?";
@@ -50,6 +54,10 @@ public class DivisionDAO implements DAO<FirstLevelDivision> {
         return division;
     }
 
+    /**
+     * Gets a list of all divisions in the database
+     * @return  a list of all divisions in the database
+     */
     @Override
     public ObservableList<FirstLevelDivision> getAll() throws SQLException {
         ObservableList<FirstLevelDivision> allDivisions = FXCollections.observableArrayList();
@@ -68,21 +76,30 @@ public class DivisionDAO implements DAO<FirstLevelDivision> {
         return allDivisions;
     }
 
+    /**
+     * Saves current firstLevelDivision - Unused
+     */
     @Override
     public int save(FirstLevelDivision firstLevelDivision) throws SQLException {
         return 0;
     }
-
+    /**
+     * insert current firstLevelDivision - Unused
+     */
     @Override
     public int insert(FirstLevelDivision firstLevelDivision) throws SQLException {
         return 0;
     }
-
+    /**
+     * update current firstLevelDivision - Unused
+     */
     @Override
     public int update(FirstLevelDivision firstLevelDivision) throws SQLException {
         return 0;
     }
-
+    /**
+     * delete current firstLevelDivision - Unused
+     */
     @Override
     public int delete(FirstLevelDivision firstLevelDivision) throws SQLException {
         return 0;
