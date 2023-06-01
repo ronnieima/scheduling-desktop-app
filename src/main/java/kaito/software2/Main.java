@@ -24,7 +24,11 @@ public class Main extends Application implements Validate{
     private static Stage stage;
     public static final LocalTime OPENING_TIME = LocalTime.of(8, 00);
     public static final LocalTime CLOSING_TIME = LocalTime.of(22, 00);
-
+    /**
+     * Creates the stage for all of the scenes to be put in.
+     * LAMBDA - I added a functionality that prompts that user if they would like to exit after pressing the
+     *          exit button on the window. This would prevent the user from accidentally closing out of the progran.
+     */
     @Override
     public void start(Stage stage) throws IOException, SQLException {
         this.stage = stage;

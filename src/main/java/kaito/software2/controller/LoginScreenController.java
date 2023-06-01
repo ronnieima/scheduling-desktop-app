@@ -41,7 +41,7 @@ public class LoginScreenController extends UserDAO implements Initializable, Nav
 
     /**
      * Initialize method that sets the local system's language and time zone.
-     * LAMBDA FUNCTION: I used a lambda function to initiate a login when pressing the ENTER key after entering the password.
+     * LAMBDA : I used a lambda to initiate a login when pressing the ENTER key after entering the password.
      *                  This makes it so that the user does not have to move the mouse to login.
      */
     @Override

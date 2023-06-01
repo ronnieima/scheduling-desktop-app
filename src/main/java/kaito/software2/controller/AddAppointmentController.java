@@ -78,19 +78,19 @@ public class AddAppointmentController extends AppointmentDAO implements Initiali
      * @throws SQLException Throws SQLException
      */
     public void save() throws IOException, SQLException {
-        String title = this.title.getText();
-        String desc = this.desc.getText();
-        String location = this.location.getText();
-        String type = this.type.getText();
-        Customer customer = this.customers.getValue();
-        User user = this.users.getValue();
-        Contact contact = this.contacts.getValue();
-        LocalDateTime start = convertEstToLocal(LocalDateTime.of(startDate.getValue(), startTime.getValue()));
-        LocalDateTime end = convertEstToLocal(LocalDateTime.of(endDate.getValue(), endTime.getValue()));
-
-        Appointment newAppointment = new Appointment(title, desc, location, type, start, end, customer.getId(), user.getUserId(), contact.getId());
-
         try {
+            String title = this.title.getText();
+            String desc = this.desc.getText();
+            String location = this.location.getText();
+            String type = this.type.getText();
+            Customer customer = this.customers.getValue();
+            User user = this.users.getValue();
+            Contact contact = this.contacts.getValue();
+            LocalDateTime start = convertEstToLocal(LocalDateTime.of(startDate.getValue(), startTime.getValue()));
+            LocalDateTime end = convertEstToLocal(LocalDateTime.of(endDate.getValue(), endTime.getValue()));
+
+            Appointment newAppointment = new Appointment(title, desc, location, type, start, end, customer.getId(), user.getUserId(), contact.getId());
+
             if(!isOutsideBusinessHours(newAppointment) && !startTimeIsAfterEndTime(newAppointment)) {
                 if (checkDate(this.startDate.getValue(), this.endDate.getValue())) {
                     if (checkOverlappingAppointments(newAppointment, start, end)) {
@@ -101,7 +101,7 @@ public class AddAppointmentController extends AppointmentDAO implements Initiali
                     }
                 }
             }
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             Validate.popupError(2);
         }
     }
