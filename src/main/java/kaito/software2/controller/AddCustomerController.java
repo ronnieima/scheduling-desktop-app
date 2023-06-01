@@ -55,15 +55,15 @@ public class AddCustomerController extends CustomerDAO implements Initializable,
      * Saves all of the attributes and adds a customer to the database
      */
     public void save() throws IOException, SQLException {
-        String name = this.name.getText();
-        String address = this.address.getText();
-        String postalCode = this.postalCode.getText();
-        String phone = this.phone.getText();
-        int divisionId = division.getValue().getId();
-
-        Customer newCustomer = new Customer(name, address, postalCode,phone,divisionId);
-
         try {
+            String name = this.name.getText();
+            String address = this.address.getText();
+            String postalCode = this.postalCode.getText();
+            String phone = this.phone.getText();
+            int divisionId = division.getValue().getId();
+
+            Customer newCustomer = new Customer(name, address, postalCode,phone,divisionId);
+
             insert(newCustomer);
             switchScene("view/customer-screen.fxml");
         } catch (NullPointerException npe) {

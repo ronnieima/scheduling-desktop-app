@@ -36,8 +36,8 @@ public class LoginScreenController extends UserDAO implements Initializable, Nav
     public Label usernameLabel;
     public Label timezone;
     public Label timezoneLabel;
-    public static boolean english = true;
-    public static boolean french = false;
+    public static boolean english;
+    public static boolean french;
 
     /**
      * Initialize method that sets the local system's language and time zone.
@@ -101,7 +101,7 @@ public class LoginScreenController extends UserDAO implements Initializable, Nav
         AppointmentDAO appointmentDAO = new AppointmentDAO();
         String username = usernameField.getText();
         String password = passwordField.getText();
-        User user = checkLogin(username, password);
+        User user = checkLogin(username.trim(), password);
         if (user != null) {
             String successLog = "User " + user.getUserName() + " successfully logged in at " + LocalDateTime.now(ZoneId.of("UTC")) + " UTC\n";
             writer.append(successLog);

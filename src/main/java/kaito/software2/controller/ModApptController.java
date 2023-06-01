@@ -117,7 +117,7 @@ public class ModApptController extends AppointmentDAO implements Initializable, 
                     Validate.popupError(5);
                 }
             }
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             Validate.popupError(2);
         }
     }

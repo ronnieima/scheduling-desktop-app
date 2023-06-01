@@ -7,3 +7,25 @@ User  gave invalid login at 2023-06-01T08:17:25.998971200 UTC
 User test successfully logged in at 2023-06-01T08:17:28.646007 UTC
 User test successfully logged in at 2023-06-01T08:17:59.628304100 UTC
 User test successfully logged in at 2023-06-01T08:18:41.702227900 UTC
+User test successfully logged in at 2023-06-01T08:21:01.892768 UTC
+User  gave invalid login at 2023-06-01T08:23:19.870128900 UTC
+User  gave invalid login at 2023-06-01T08:24:13.374734300 UTC
+User  gave invalid login at 2023-06-01T08:25:06.864611 UTC
+User  gave invalid login at 2023-06-01T08:27:45.990033400 UTC
+User  gave invalid login at 2023-06-01T08:28:29.451298 UTC
+User  gave invalid login at 2023-06-01T08:28:30.981291700 UTC
+User  gave invalid login at 2023-06-01T08:28:32.288820900 UTC
+User  gave invalid login at 2023-06-01T08:28:33.479088100 UTC
+User  gave invalid login at 2023-06-01T08:28:34.638354600 UTC
+User  gave invalid login at 2023-06-01T08:29:25.243946600 UTC
+User  gave invalid login at 2023-06-01T08:29:26.881282600 UTC
+User admin  gave invalid login at 2023-06-01T08:29:29.933869700 UTC
+User admin  gave invalid login at 2023-06-01T08:29:32.842036200 UTC
+User admin  gave invalid login at 2023-06-01T08:29:35.982278600 UTC
+User test successfully logged in at 2023-06-01T08:29:38.846277600 UTC
+User test successfully logged in at 2023-06-01T08:31:37.715004300 UTC
+User asd gave invalid login at 2023-06-01T08:31:58.177055800 UTC
+User test successfully logged in at 2023-06-01T08:32:00.078814100 UTC
+User test successfully logged in at 2023-06-01T08:33:26.557110400 UTC
+User  gave invalid login at 2023-06-01T08:34:58.150062600 UTC
+User test successfully logged in at 2023-06-01T08:35:00.310270400 UTC

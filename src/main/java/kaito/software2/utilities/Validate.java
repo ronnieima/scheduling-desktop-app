@@ -22,7 +22,7 @@ public interface Validate {
     static void popupError(int alertId) {
         switch (alertId){
             case 1: // checkDate error
-                if (french = true) {
+                if (french) {
                     Alert checkDateAlert = createAlert(Alert.AlertType.ERROR, "Erreur",
                             frBundle.getString("checkDateAlert"));
                     checkDateAlert.showAndWait();
@@ -33,7 +33,7 @@ public interface Validate {
                 checkDateAlert.showAndWait();
                 break;
             case 2: // username empty
-                if (french = true) {
+                if (french) {
                     Alert emptyError = createAlert(Alert.AlertType.ERROR, "Erreur",
                             frBundle.getString("emptyError"));
                     emptyError.showAndWait();
@@ -44,7 +44,7 @@ public interface Validate {
                 emptyError.showAndWait();
                 break;
             case 3: // no item selected
-                if (french = true) {
+                if (french) {
                     Alert noItemSelected = createAlert(Alert.AlertType.ERROR, "Erreur",
                             frBundle.getString("noItemSelected"));
                     noItemSelected.showAndWait();
@@ -55,7 +55,7 @@ public interface Validate {
                 noItemSelected.showAndWait();
                 break;
             case 4: // customer still has appointments when being deleted
-                if (french = true) {
+                if (french) {
                     Alert customerHasAppts = createAlert(Alert.AlertType.ERROR, "Erreur",
                             frBundle.getString("customerHasAppts"));
                     customerHasAppts.showAndWait();
@@ -66,7 +66,7 @@ public interface Validate {
                 customerHasAppts.showAndWait();
                 break;
             case 5: // overlapping appointment error
-                if (french = true) {
+                if (french) {
                     Alert overlappingAppt = createAlert(Alert.AlertType.ERROR, "Erreur",
                             frBundle.getString("overlappingAppt"));
                     overlappingAppt.showAndWait();
@@ -77,7 +77,7 @@ public interface Validate {
                 overlappingAppt.showAndWait();
                 break;
             case 6: // outside business hours error
-                if (french = true) {
+                if (french) {
                     Alert outsideBusinessHours = createAlert(Alert.AlertType.ERROR, "Erreur",
                             frBundle.getString("outsideBusinessHours"));
                     outsideBusinessHours.showAndWait();
@@ -88,7 +88,7 @@ public interface Validate {
                 outsideBusinessHours.showAndWait();
                 break;
             case 7: // start time after end time error
-                if (french = true) {
+                if (french) {
                     Alert startAfterEnd = createAlert(Alert.AlertType.ERROR, "Erreur",
                             frBundle.getString("startAfterEnd"));
                     startAfterEnd.showAndWait();
@@ -99,7 +99,7 @@ public interface Validate {
                 startAfterEnd.showAndWait();
                 break;
             case 8: // invalid login error
-                if (french = true) {
+                if (french) {
                     Alert invalidLogin = createAlert(Alert.AlertType.ERROR, "Erreur",
                             frBundle.getString("invalidLogin"));
                     invalidLogin.showAndWait();

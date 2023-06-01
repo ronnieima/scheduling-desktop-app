@@ -48,7 +48,7 @@ public class AppointmentDAO implements DAO<Appointment>, Validate {
         }
         // If there is no appointment found, popup an alert that states that there are no upcoming appointments.
         if (!appointmentFound) {
-            if (french = true) {
+            if (french) {
                 Alert noAppointments = Validate.createAlert(Alert.AlertType.INFORMATION, "No Upcoming Appointment", "Vous n'avez aucun rendez-vous à venir.");
                 noAppointments.showAndWait();
             } else{

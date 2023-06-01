@@ -17,7 +17,7 @@ import static kaito.software2.controller.LoginScreenController.*;
 
 
 /**
- *
+ * Main class which calls the functions that opens the database, launches the stage, and closes the database on exit.
  */
 public class Main extends Application implements Validate{
 
@@ -40,7 +40,7 @@ public class Main extends Application implements Validate{
 
         stage.setOnCloseRequest(windowEvent -> {
             Alert exitConf;
-            if(french = true) {
+            if(french) {
                 exitConf = Validate.createAlert(Alert.AlertType.CONFIRMATION, "Sortie", "Voulez-vous vraiment quitter ?");
             } else {
                 exitConf = Validate.createAlert(Alert.AlertType.CONFIRMATION, "Exit", "Are you sure you would like to exit?");
